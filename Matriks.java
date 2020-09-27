@@ -88,8 +88,19 @@ public class Matriks{
             this.isimatriks[i2][j] = tmp;
         }
     }
+
+    //getisi
+    double getIsi(int i, int j){
+        return this.isimatriks[i][j];
+    }
+
+    //setisi
+    void setIsi(int i, int j, double x){
+        this.isimatriks[i][j] = x;
+    }
+
     boolean isBarisNol(int i){
-        boolean isNol;
+        boolean isNol = true;
         int j=0;
         while(j<=getLastIdxKlm() && isNol){
             if (this.isimatriks[i][j]!=0){
@@ -102,7 +113,7 @@ public class Matriks{
         return (isNol);
     }
     boolean isNoSolution(int i){
-        boolean isNol;
+        boolean isNol = true;
         int j=0;
         while(j<getLastIdxKlm() && isNol){
             if (this.isimatriks[i][j]!=0){
@@ -110,7 +121,7 @@ public class Matriks{
             }
             j++;
         }
-        return(this.isimatriks[i][getLastIdxKlm()]==0);
+        return((this.isimatriks[i][getLastIdxKlm()]==0)&&isNol);
     }
     
 
