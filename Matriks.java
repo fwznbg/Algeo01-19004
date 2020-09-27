@@ -89,12 +89,16 @@ public class Matriks{
         }
     }
 
-    /*public static void main(String[] args) {
+    //Merubah isimatriks di baris i dan kolom j dengan x
+    void setIsi(int i, int j, double x){
+        this.isimatriks[i][j] = x;
+    }
+    public static void main(String[] args) {
         Matriks matriks1 = new Matriks(2, 2);
         matriks1.bacaMatriks();
         matriks1.tulisMatriks();
         System.out.println("Menukar baris");
-        matriks1.tukarBaris(0, 1);
+        matriks1.setIsi(0, 1, 99);
         matriks1.tulisMatriks();
-    }*/
+    }
 }
