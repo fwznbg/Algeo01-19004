@@ -45,11 +45,12 @@ public class Matriks{
     //Membaca nilai isi matriks dari masukan pengguna
     void bacaMatriks(){
         int i, j;
+        Scanner input = new Scanner(System.in);
         for(i=0;i<this.baris;i++){
+            String a[] = input.nextLine().split(" ");
             for(j=0;j<this.kolom;j++){
-                Scanner input = new Scanner(System.in);
-                System.out.print("Masukkan isi matriks baris ke-"+(i+1)+" kolom ke-"+(j+1)+": ");;
-                this.isimatriks[i][j] = input.nextDouble();
+                this.isimatriks[i][j] = Double.parseDouble(a[j]);
+                // System.out.print("Masukkan isi matriks baris ke-"+(i+1)+" kolom ke-"+(j+1)+": ");;
             }
         }
     }
@@ -125,12 +126,9 @@ public class Matriks{
     }
     
 
-    /*public static void main(String[] args) {
-        Matriks matriks1 = new Matriks(2, 2);
+    public static void main(String[] args) {
+        Matriks matriks1 = new Matriks(3, 3);
         matriks1.bacaMatriks();
         matriks1.tulisMatriks();
-        System.out.println("Menukar baris");
-        matriks1.tukarBaris(0, 1);
-        matriks1.tulisMatriks();
-    }*/
+    }
 }
