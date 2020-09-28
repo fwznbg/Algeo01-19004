@@ -1,43 +1,28 @@
-import java.util.Scanner;
-
 public class DetReduksi {
-    public void detRed(){
-        int i, j, k, brs, klm;
-        int tkrbrs = 0;
-        double ratio, determinan;
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Masukkan banyak baris: ");
-        brs = scanner.nextInt();
-        System.out.print("Masukkan banyak kolom: ");
-        klm = scanner.nextInt();
-        
-        Matriks matriks = new Matriks(brs, klm);
-        matriks.bacaMatriks();
-        
-        for(j=0;j<matriks.getLastIdxKlm();j++){
-            // for(i=0;i<matriks.getLastIdxBrs();i++){
-            k = j;
-            while((matriks.getIsi(j, j) == 0) && k<=matriks.getLastIdxBrs()){
-                matriks.tukarBaris(j, k+1);
-                tkrbrs++;
-                k++;
-            };
-
-            for(i=j+1;i<=matriks.getLastIdxBrs();i++){
-                ratio = matriks.getIsi(i, j)/matriks.getIsi(j, j);
-                matriks.kurangBaris(i, j, ratio);
+    public void detRed(Matriks M){
+        int i, j;
+        double ratio;
+        double determinan = 1;
+        for(j=0;j<M.getLastIdxKlm();j++){
+            if(M.getIsi(j, j) == 0){
+                determinan = 0;
+            }
+            for(i=j+1;i<=M.getLastIdxBrs();i++){
+                ratio = M.getIsi(i, j)/M.getIsi(j, j);
+                M.kurangBaris(i, j, ratio);
             }
         }
-
-        determinan = Math.pow(-1, tkrbrs);
-        for(i=0;i<=matriks.getLastIdxBrs();i++){
-            determinan *= matriks.getIsi(i, i);
+        if(determinan!=0){
+        for(i=0;i<=M.getLastIdxBrs();i++){
+            determinan *= M.getIsi(i, i);
+            }
         }
-        System.out.println("Determinanya adalah "+determinan);
-        scanner.close();
-    }
+        System.out.print("Determinanya adalah "+determinan);
+        }
     /*public static void main(String[] args){
         DetReduksi det = new DetReduksi();
-        det.detRed();
+        Matriks M = new Matriks(4, 4);
+        M.bacaMatriks();
+        det.detRed(M);
     }*/
 }

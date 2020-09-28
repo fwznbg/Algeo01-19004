@@ -126,9 +126,9 @@ public class Matriks{
     }
     
 
-    /*public static void main(String[] args) {
-        Matriks matriks1 = new Matriks(3, 3);
+    public static void main(String[] args) {
+        Matriks matriks1 = new Matriks(4, 4);
         matriks1.bacaMatriks();
         matriks1.tulisMatriks();
-    }*/
+    }
 }
