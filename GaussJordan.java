@@ -3,10 +3,9 @@ import java.text.*;
 import java.lang.Math.*;
 import java.io.*;
 
-public class GausssJordan {
+public class GaussJordan {
 
     public void gaussjor(Matriks M) {
-        int n=0;
         double x;
         int j=M.idxKlmOne(1);
         int i=1;
@@ -33,7 +32,7 @@ public class GausssJordan {
             
     }
     public static void main(String[] args){
-        GausssJordan gj= new GausssJordan();
+        GaussJordan gj= new GaussJordan();
         Matriks M=new Matriks(4,5);
         M.bacaMatriks();
         gj.gaussjor(M);
