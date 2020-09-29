@@ -3,6 +3,8 @@ public class DetReduksi {
         int i, j;
         double ratio;
         double determinan = 1;
+
+        // Membuat matriks segitiga
         for(j=0;j<M.getLastIdxKlm();j++){
             if(M.getIsi(j, j) == 0){
                 determinan = 0;
