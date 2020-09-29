@@ -50,7 +50,7 @@ public class Matriks{
             String a[] = input.nextLine().split(" ");
             for(j=0;j<this.kolom;j++){
                 this.isimatriks[i][j] = Double.parseDouble(a[j]);
-                // System.out.print("Masukkan isi matriks baris ke-"+(i+1)+" kolom ke-"+(j+1)+": ");;
+                //System.out.print("Masukkan isi matriks baris ke-"+(i+1)+" kolom ke-"+(j+1)+": ");;
             }
         }
     }
@@ -123,6 +123,20 @@ public class Matriks{
             j++;
         }
         return((this.isimatriks[i][getLastIdxKlm()]==0)&&isNol);
+    }
+
+    int idxKlmOne(int i){
+        int j=0;
+        boolean isOne=false;
+        while (j<getLastIdxKlm() && !isOne){
+            if (this.isimatriks[i][j]==1){
+                isOne=true;
+            }
+            else{
+                j++;
+            }
+        }
+        return j;
     }
     
 
