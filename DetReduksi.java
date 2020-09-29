@@ -1,5 +1,5 @@
 public class DetReduksi {
-    public void detRed(Matriks M){
+    public double detRed(Matriks M){
         int i, j;
         double ratio;
         double determinan = 1;
@@ -19,12 +19,12 @@ public class DetReduksi {
             determinan *= M.getIsi(i, i);
             }
         }
-        System.out.print("Determinanya adalah "+determinan);
-        }
-    /*public static void main(String[] args){
-        DetReduksi det = new DetReduksi();
-        Matriks M = new Matriks(4, 4);
-        M.bacaMatriks();
-        det.detRed(M);
-    }*/
+        return determinan;
+    }
+    // public static void main(String[] args){
+    //     DetReduksi det = new DetReduksi();
+    //     Matriks M = new Matriks(2, 2);
+    //     M.bacaMatriks();
+    //     System.out.println(det.detRed(M));
+    // }
 }
