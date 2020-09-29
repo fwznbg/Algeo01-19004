@@ -145,4 +145,9 @@ public class Matriks{
         matriks1.bacaMatriks();
         matriks1.tulisMatriks();
     }
+
+
+    boolean isNol(int i){
+        return (this,isimatriks[i][0]==0);
+    }
 }
