@@ -67,7 +67,7 @@ public class Matriks {
 
     // Mengalikan setiap nilai di baris i dengan skalar k
     // Indeks baris dimulai dari 0
-    void kaliSkalar(int i, int k) {
+    void kaliSkalar(int i, double k) {
         int j;
         for (j = 0; j < this.kolom; j++) {
             this.isimatriks[i][j] *= k;
@@ -160,7 +160,15 @@ public class Matriks {
 
     // menentukan apakah elemen 0 atau bukan
     boolean isNol(int i, int j){
-        return (this,isimatriks[i][j]==0);
+        return (this.isimatriks[i][j]==0);
+    }
+
+    int idxNotNol(int i){
+        int j=0;
+        while (j<=getLastIdxKlm() && isNol(i, j)){
+            j++;
+        }
+        return j;
     }
     
     // public static void main(String[] args){
