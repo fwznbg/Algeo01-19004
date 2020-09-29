@@ -156,18 +156,15 @@ public class Matriks {
         } catch (FileNotFoundException e) {
             System.out.println("\nFile tidak ditemukan\n");
         }
-    }
-<<<<<<< HEAD
 
-
-    boolean isNol(int i){
-        return (this,isimatriks[i][0]==0);
+        boolean isNol(int i){
+            return (this,isimatriks[i][0]==0);
+        }
     }
-=======
+
     // public static void main(String[] args){
     //     Matriks matriks1 = new Matriks(4, 4);
     //     matriks1.bacaMatriksFile("inpu.txt");
     //     matriks1.tulisMatriks();
     // }
->>>>>>> 09121443cc1a456394582c921981f130da5cae32
 }
