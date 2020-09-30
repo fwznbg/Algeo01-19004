@@ -290,11 +290,12 @@ public class Matriks {
             }
 
         // Inverse
-
+        boolean inv = true;
         // Membuat matriks segitiga atas
         for(j=0; j<Minv.getLastIdxKlm(); j++){
             if(Minv.getIsi(j, j) == 0){
-                System.out.println("Matriks tidak memiliki balikan");
+                System.out.println("Matriks tidak memiliki balikan, hasil tidak dapat ditemukan");
+                inv = false;
                 break;
             }
             for(i=j+1; i<=Minv.getLastIdxBrs(); i++){
@@ -307,7 +308,8 @@ public class Matriks {
         }
         for(j=1; j<=Minv.getLastIdxKlm(); j++){
             if(Minv.getIsi(j, j) == 0){
-                System.out.println("Matriks tidak memiliki balikan");
+                System.out.println("Matriks tidak memiliki balikan, hasil tidak dapat ditemukan");
+                inv = false;
                 break;
             }
             for(i=0; i<j; i++){
@@ -331,7 +333,11 @@ public class Matriks {
             }
             hasil.setIsi(i, 0, sum);
         }
-        hasil.tulisMatriks();
+        if(inv){
+            for(int m=0; m<=hasil.getLastIdxBrs();m++){
+                System.out.println("X"+(m+1)+" = "+hasil.getIsi(m, 0));
+            }
+        }
     }
 
     void gaussjor(Matriks M) {
@@ -424,9 +430,9 @@ public class Matriks {
         M.tulisMatriks();  
     }
     }
-    // public static void main(String[] args){
-    //     Matriks matriks1 = new Matriks(4, 4);
-    //     matriks1.bacaMatriksFile("inpu.txt");
-    //     matriks1.tulisMatriks();
-    // }
+    public static void main(String[] args){
+        Matriks matriks1 = new Matriks(3, 4);
+        matriks1.bacaMatriks();
+        matriks1.splinvers(matriks1);
+    }
 }
