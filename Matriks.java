@@ -141,10 +141,14 @@ public class Matriks {
     }
 
     // Membaca matriks dari file.txt
-    void bacaMatriksFile(String namafile_txt) {
+    void bacaMatriksFile() {
         FileInputStream fis;
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Masukkan nama file.txt: ");
+        String namafile = scanner.nextLine();
+
         try {
-            fis = new FileInputStream(namafile_txt);
+            fis = new FileInputStream("test/"+namafile);
             Scanner sc=new Scanner(fis);
             int i, j;
             for(i=0;i<this.baris;i++){
@@ -158,13 +162,12 @@ public class Matriks {
         }
     }
 
+
     // menentukan apakah elemen 0 atau bukan
     boolean isNol(int i, int j){
         return (this.isimatriks[i][j]==0);
     }
 
-    int idxNotNol(int i){
-        int j=0;
         while (j<=getLastIdxKlm() && isNol(i, j)){
             j++;
         }
