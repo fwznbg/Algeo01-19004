@@ -8,7 +8,7 @@ public class Cramer
     public void cramer(Matriks M)
     {
         double deter, deterNew, hasil;
-        int i,j;
+        int i,j,h;
 
         // inisiasi matriks A
         Matriks Ma = new Matriks(M.getBaris(),(M.getKolom())-1);
@@ -53,18 +53,20 @@ public class Cramer
                 Mnew.setIsi(i, j, Mb.getIsi(i, 0));
             }
 
-            Mnew.tulisMatriks();
-
             // mencari determinan matriks Mnew yang sudah isi kolom j nya sudah diganti
             deterNew = det.detRed(Mnew);
-            System.out.println(deterNew);
 
             // mencari hasil dan dimasukan ke matriks Mhasil
             hasil = deterNew/deter;
             Mhasil.setIsi(0, j, hasil);
         }
 
-        Mhasil.tulisMatriks();
+        // print out hasil
+        for (h=0; h<=Mhasil.getLastIdxKlm(); h++)
+        {
+            System.out.println("X["+(h+1)+"] = "+Mhasil.getIsi(0, h));
+        }
+        
     }
 
     public static void main(String[] args)
