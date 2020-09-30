@@ -28,6 +28,11 @@ public class Gauss {
                 M.kurangBaris(c, i, M.getIsi(c, j));
             }
         }
+        for (i=0;i<=M.getLastIdxBrs();i++){
+            for (j=0;j<=M.getLastIdxBrs();j++){
+                M.setIsi(i, j, M.getIsi(i, j)+0.0);
+            }
+        }
         return M;   
     }
     public static void main(String[] args){
