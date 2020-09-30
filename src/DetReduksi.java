@@ -9,7 +9,7 @@ public class DetReduksi {
         for(j=0;j<M.getLastIdxKlm();j++){
             int k = j+1;
             while(M.getIsi(j, j) == 0 && k<=M.getLastIdxBrs()){
-                tukarBaris(j, k);
+                M.tukarBaris(j, k);
                 tkrbrs++;
                 k++;
             }
