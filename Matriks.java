@@ -177,25 +177,27 @@ public class Matriks {
     }
     double detRed(Matriks M){
         int i, j;
+        int tkrbrs = 0;
         double ratio;
         double determinan = 1;
 
         // Membuat matriks segitiga
         for(j=0;j<M.getLastIdxKlm();j++){
-            if(M.getIsi(j, j) == 0){
-                determinan = 0;
+            int k = j+1;
+            while(M.getIsi(j, j) == 0 && k<=M.getLastIdxBrs()){
+                tukarBaris(j, k);
+                tkrbrs++;
+                k++;
             }
             for(i=j+1;i<=M.getLastIdxBrs();i++){
                 ratio = M.getIsi(i, j)/M.getIsi(j, j);
                 M.kurangBaris(i, j, ratio);
             }
         }
-        if(determinan!=0){
         for(i=0;i<=M.getLastIdxBrs();i++){
             determinan *= M.getIsi(i, i);
-            }
         }
-        return determinan;
+        return determinan*Math.pow(-1, tkrbrs);
     }
 
     void inverse(Matriks M)
@@ -397,7 +399,7 @@ public class Matriks {
         }
         
         intpls = intpls.gauss(intpls);
-        
+
     }
 
     void regresi () {
