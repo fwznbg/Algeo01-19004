@@ -4,7 +4,7 @@ public class Main {
     boolean bacafile = false;
     void isbacafile(){
         System.out.println("1. Keyboard\n2. File");
-        System.out.println("Pilih cara input: ");
+        System.out.print("Pilih cara input: ");
         Scanner scanner = new Scanner(System.in);
         int file = scanner.nextInt();
         if(file==1){
@@ -40,14 +40,13 @@ public class Main {
                 submenu = scanner.nextInt();
             }
             switch(submenu){
-                //gauss
-                case 1: 
+                case 1: //gauss
                     break;
-                //gauss-jordan
-                case 2: 
+                
+                case 2:     //gauss-jordan
                     break;
-                //metode invers
-                case 3: 
+                
+                case 3:     //metode invers
                 main.isbacafile();
                 Scanner input = new Scanner(System.in);
                 int brs, klm;
@@ -58,16 +57,32 @@ public class Main {
                 Matriks M = new Matriks(brs, klm);
                 if(main.bacafile){
                     M.bacaMatriksFile();
-                    System.out.println(M.splinvers(M));
+                    M.splinvers(M);
                 }
                 else{
                     M.bacaMatriks();
-                    System.out.println(M.splinvers(M));
+                    M.splinvers(M);
                 }
-                scanner.close();
+                input.close();
                     break;
-                //cramer
-                case 4: 
+                case 4: //cramer
+                    main.isbacafile();
+                    Scanner userinput = new Scanner(System.in);
+                    int a, b;
+                    System.out.print("Masukkan jumlah baris: ");
+                    a = userinput.nextInt();
+                    System.out.print("Masukkan jumlah kolom: ");
+                    b = userinput.nextInt();
+                    Matriks Mcram = new Matriks(a, b);
+                    if(main.bacafile){
+                        Mcram.bacaMatriksFile();
+                        Mcram.cramer(Mcram);
+                    }
+                    else{
+                        Mcram.bacaMatriks();
+                        Mcram.cramer(Mcram);
+                    }
+                    userinput.close();
                     break;
             }
                 break;

@@ -402,36 +402,36 @@ public class Matriks {
 
     }
 
-    void regresi () {
-        Scanner xinput = new Scanner(System.in);
-        int n = xinput.nextInt();
-        int k = xinput.nextInt();
-        double Elmtx;
-        Matriks M= new Matriks(k+1, k+2); //inisiasi matriks
-        M.setIsi(0, 0, 1); // inisialisasi elemen 0,0 dengan 1
-        for (int j=0; j<k+2;j++){ 
-            Elmtx= xinput.nextDouble();
-            for (int i=0;i<k+1;i++){
-                if(i==0 && j<k-1){
-                    M.setIsi(i, j+1, Elmt);
-                }
-                if (i!=0){
-                    M.setIsi(i, j, Elmt);
-                }
-            }
-        double Elmty;
-        Elmty= xinput.nextDouble();
-        for (int i=0;i<k+1;i++){
-            M.setIsi(k+1, j, x);
-        }
-        for (int i=1;i<k;i++){
-            for (int j=1; j<k;j++){
-                M.kaliSkalar(i, M.getIsi(i, 0));
-            }
-        }
-        M.tulisMatriks();  
-    }
-    }
+    // void regresi () {
+    //     Scanner xinput = new Scanner(System.in);
+    //     int n = xinput.nextInt();
+    //     int k = xinput.nextInt();
+    //     double Elmtx;
+    //     Matriks M= new Matriks(k+1, k+2); //inisiasi matriks
+    //     M.setIsi(0, 0, 1); // inisialisasi elemen 0,0 dengan 1
+    //     for (int j=0; j<k+2;j++){ 
+    //         Elmtx= xinput.nextDouble();
+    //         for (int i=0;i<k+1;i++){
+    //             if(i==0 && j<k-1){
+    //                 M.setIsi(i, j+1, Elmt);
+    //             }
+    //             if (i!=0){
+    //                 M.setIsi(i, j, Elmt);
+    //             }
+    //         }
+    //     double Elmty;
+    //     Elmty= xinput.nextDouble();
+    //     for (int i=0;i<k+1;i++){
+    //         M.setIsi(k+1, j, x);
+    //     }
+    //     for (int i=1;i<k;i++){
+    //         for (int j=1; j<k;j++){
+    //             M.kaliSkalar(i, M.getIsi(i, 0));
+    //         }
+    //     }
+    //     M.tulisMatriks();  
+    // }
+    // }
 
     Matriks gauss(Matriks M) {
         int i,j;
@@ -465,6 +465,69 @@ public class Matriks {
             }
         }
         return M;   
+    }
+    
+    void cramer(Matriks M)
+    {
+        double deter, deterNew, hasil;
+        int i,j,h;
+
+        // inisiasi matriks A
+        Matriks Ma = new Matriks(M.getBaris(),(M.getKolom())-1);
+        for (int a=0; a<=Ma.getLastIdxBrs(); a++)
+        {
+            for (int b=0; b<=Ma.getLastIdxKlm(); b++)
+            {
+                Ma.setIsi(a, b, M.getIsi(a, b));
+            }
+        } 
+
+        // determinan Ma
+        deter = Ma.detRed(Ma);
+
+        // inisiasi matriks B
+        Matriks Mb = new Matriks(M.getBaris(),1);
+        for (int c=0; c<=Mb.getLastIdxBrs(); c++)
+        {
+            Mb.setIsi(c, 0, M.getIsi(c, M.getLastIdxKlm()));
+        } 
+
+        // inisiasi matriks hasil
+        Matriks Mhasil = new Matriks(1, (M.getKolom())-1);
+
+        // looping untuk mencari hasil
+        for (j=0; j<=Ma.getLastIdxKlm(); j++)
+        {
+            // inisiasi matriks baru untuk dicari determinan nya
+            Matriks Mnew = new Matriks(M.getBaris(),(M.getKolom())-1);
+            for (int m=0; m<=Mnew.getLastIdxBrs(); m++)
+            {
+                for (int n=0; n<=Mnew.getLastIdxKlm(); n++)
+                {
+                    Mnew.setIsi(m, n, M.getIsi(m, n));
+                }
+            } 
+
+            // mengganti isi setiap baris di kolom j menjadi isi di matriks Mb
+            for (i=0; i<=Ma.getLastIdxBrs(); i++)
+            {
+                Mnew.setIsi(i, j, Mb.getIsi(i, 0));
+            }
+
+            // mencari determinan matriks Mnew yang sudah isi kolom j nya sudah diganti
+            deterNew = Mnew.detRed(Mnew);
+
+            // mencari hasil dan dimasukan ke matriks Mhasil
+            hasil = deterNew/deter;
+            Mhasil.setIsi(0, j, hasil);
+        }
+
+        // print out hasil
+        for (h=0; h<=Mhasil.getLastIdxKlm(); h++)
+        {
+            System.out.println("X["+(h+1)+"] = "+Mhasil.getIsi(0, h));
+        }
+        
     }
     public static void main(String[] args){
         Matriks matriks1 = new Matriks(3, 4);
