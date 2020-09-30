@@ -168,6 +168,8 @@ public class Matriks {
         return (this.isimatriks[i][j]==0);
     }
 
+    int idxNotNol(int i){
+        int j=0;
         while (j<=getLastIdxKlm() && isNol(i, j)){
             j++;
         }
