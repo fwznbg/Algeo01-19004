@@ -11,7 +11,7 @@ public class Cramer
         int i,j;
 
         // inisiasi matriks A
-        Matriks Ma = new Matriks(M.getBaris(),M.getKolom()-1);
+        Matriks Ma = new Matriks(M.getBaris(),(M.getKolom())-1);
         for (int a=0; a<=Ma.getLastIdxBrs(); a++)
         {
             for (int b=0; b<=Ma.getLastIdxKlm(); b++)
@@ -32,29 +32,32 @@ public class Cramer
         } 
 
         // inisiasi matriks hasil
-        Matriks Mhasil = new Matriks(1, M.getKolom()-1);
+        Matriks Mhasil = new Matriks(1, (M.getKolom())-1);
 
         // looping untuk mencari hasil
         for (j=0; j<=Ma.getLastIdxKlm(); j++)
         {
             // inisiasi matriks baru untuk dicari determinan nya
-            Matriks Mnew = new Matriks(Ma.getBaris(),Ma.getKolom());
-            for (int n=0; n<=Mnew.getLastIdxBrs(); n++)
+            Matriks Mnew = new Matriks(M.getBaris(),(M.getKolom())-1);
+            for (int m=0; m<=Mnew.getLastIdxBrs(); m++)
             {
-                for (int m=0; m<=Mnew.getLastIdxKlm(); m++)
+                for (int n=0; n<=Mnew.getLastIdxKlm(); n++)
                 {
-                    Mnew.setIsi(n, m, Ma.getIsi(n, m));
+                    Mnew.setIsi(m, n, M.getIsi(m, n));
                 }
-            }
-            
+            } 
+
             // mengganti isi setiap baris di kolom j menjadi isi di matriks Mb
             for (i=0; i<=Ma.getLastIdxBrs(); i++)
             {
                 Mnew.setIsi(i, j, Mb.getIsi(i, 0));
             }
 
+            Mnew.tulisMatriks();
+
             // mencari determinan matriks Mnew yang sudah isi kolom j nya sudah diganti
             deterNew = det.detRed(Mnew);
+            System.out.println(deterNew);
 
             // mencari hasil dan dimasukan ke matriks Mhasil
             hasil = deterNew/deter;
