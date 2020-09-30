@@ -1,36 +1,39 @@
-import java.util.*;
-import java.text.*;
-import java.lang.Math.*;
-import java.io.*;
+
 
 public class Gauss {
 
-    public void gauss(Matriks M) {
+    public Matriks gauss(Matriks M) {
         int i,j;
         i=0;
         j=0;
-        while (i<=M.getLastIdxBrs() && M.isNol(i, j)){ //cek elmt 0,0 apakah 0
-            i++;
-        }
-        if (M.isNol(i, j)==false){
-            M.tukarBaris(0, i); //elmt 0,0 sudah bukan 0
-        }
-        i=0;
-        while(i<=M.getLastIdxBrs()){ //iterasi tiap baris
-            j=M.idxNotNol(i); //mencari elemen pertama tidak 0 pada suatu baris
-            M.kaliSkalar(i, (1/M.getIsi(i, j))); //mengubah elemen menjadi lead eselon
-            for(int a=i+1;a<=M.getLastIdxBrs();a++){ //menjadikan setiap baris pada kolom j menjadi 0
-                M.kurangBaris(a, i, M.getIsi(a, j));
+        for (i=0;i<=M.getLastIdxBrs();i++){ //iterasi tiap baris
+            int a=i;
+            int b=i;
+            boolean tertukar=false;
+            while (a<=M.getLastIdxKlm() && !tertukar){
+                while(b<=M.getLastIdxBrs() && M.isNol(b, a)){
+                    b++;
+                }
+                if (M.isNol(b, a)==false){
+                    M.tukarBaris(i, b);
+                    tertukar=true;
+                }
+                else{
+                    a++;
+                }
             }
-            i++;
+            j=M.idxNotNol(i); //mencari elemen pertama tidak 0 pada suatu baris
+            M.kaliSkalar(i, +(1/M.getIsi(i, j))); //mengubah elemen menjadi lead eselon
+            for(int c=i+1;c<=M.getLastIdxBrs();c++){ //menjadikan setiap baris pada kolom j menjadi 0
+                M.kurangBaris(c, i, M.getIsi(c, j));
+            }
         }
-        M.tulisMatriks();
-            
+        return M;   
     }
     public static void main(String[] args){
         Gauss g= new Gauss();
-        Matriks M=new Matriks(3,4);
+        Matriks M=new Matriks(4,5);
         M.bacaMatriks();
-        g.gauss(M);
+        g.gauss(M).tulisMatriks();
     }
 }
