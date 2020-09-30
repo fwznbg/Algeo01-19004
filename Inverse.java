@@ -55,6 +55,9 @@ public class Inverse
                 }
             }
 
+            // baris paling bawah dikali -1
+            Minv.kaliSkalar(Minv.getLastIdxBrs(), -1);
+
             Minv.tulisMatriks();
         }
         else
