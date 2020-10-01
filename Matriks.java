@@ -171,6 +171,24 @@ public class Matriks {
         }
         return j;
     }
+
+    // Menulis variabel bertipe double dan bukan matriks ke file
+    void tulisDoubleFile(double x){
+        try {
+            FileWriter myWriter = new FileWriter("test/output.txt");
+            myWriter.write(""+x);
+            System.out.println("File berhasil disimpan");
+            myWriter.close();
+        } 
+        catch (IOException e) {
+            System.out.println("File gagal disimpan.");
+        }
+    }
+
+    // Menulis matriks M ke file
+    void tulisMatriksFile(Matriks M){
+
+    }
     double detRed(Matriks M){
         int i, j;
         int tkrbrs = 0;
@@ -397,7 +415,7 @@ public class Matriks {
         }
         
         intpls = intpls.gauss(intpls);
-
+        //nunggu solve gauss
     }
 
     void regresi () {
@@ -465,7 +483,7 @@ public class Matriks {
         return M;   
     }
     
-    void cramer(Matriks M)
+    Matriks cramer(Matriks M)
     {
         double deter, deterNew, hasil;
         int i,j,h;
@@ -523,10 +541,11 @@ public class Matriks {
         // print out hasil
         for (h=0; h<=Mhasil.getLastIdxKlm(); h++)
         {
-            System.out.println("X["+(h+1)+"] = "+Mhasil.getIsi(0, h));
+            M.setIsi(0, h, Mhasil.getIsi(0, h));
         }
-        
+        return M;
     }
+    
     // public static void main(String[] args){
     //     Matriks matriks1 = new Matriks(3, 4);
     //     matriks1.bacaMatriks();
