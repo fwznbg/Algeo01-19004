@@ -58,7 +58,7 @@ public class Matriks {
     }
 
     // Menampilkan isi matriks di layar
-    void tulisMatriks() {
+    void tulisMatriks(){
         int i;
         for (i = 0; i < this.baris; i++) {
             System.out.println(Arrays.toString(this.isimatriks[i]));
@@ -119,7 +119,7 @@ public class Matriks {
         boolean isNol = true;
         int j = 0;
         while (j < getLastIdxKlm() && isNol) {
-            if (this.isimatriks[i][j] != 0) {
+            if (isNol) {
                 isNol = false;
             }
             j++;
@@ -170,6 +170,7 @@ public class Matriks {
         }
         return j;
     }
+
     boolean isDiagonalOne(){
         boolean isOne=true;
         int i=0;
@@ -181,6 +182,22 @@ public class Matriks {
         }
         return isOne;
     }
+    int idxBrsNotNol(int j){
+        int i=0;
+        while (i<=getLastIdxBrs() && isNol(i, j)){
+            i++;
+        }
+        return i;
+    }
+
+    boolean isIdxAfterKlmNotNol(int i, int j){
+        int a=j+1;
+        while (a<getLastIdxKlm() && isNol(i, a)){
+            a++;
+        }
+        return a!=getLastIdxKlm();
+    }
+
     
     // public static void main(String[] args){
     //     Matriks matriks1 = new Matriks(4, 4);
