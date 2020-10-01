@@ -170,6 +170,17 @@ public class Matriks {
         }
         return j;
     }
+    boolean isDiagonalOne(){
+        boolean isOne=true;
+        int i=0;
+        while (i<=getLastIdxBrs() && isOne){
+            if (this.isimatriks[i][i]!=1){
+                isOne=false;
+            }
+            i++;
+        }
+        return isOne;
+    }
     
     // public static void main(String[] args){
     //     Matriks matriks1 = new Matriks(4, 4);
