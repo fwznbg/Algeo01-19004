@@ -48,20 +48,20 @@ public class Main {
         }
     }
 
-    void tulisSolveGaussFile(){
-        try {
-        FileWriter myWriter = new FileWriter("test/output.txt");
-        if(solveable){
+    // void tulisSolveGaussFile(){
+    //     try {
+    //     FileWriter myWriter = new FileWriter("test/output.txt");
+    //     if(solveable){
 
-        }
-        else{
-            System.out.println("An error occured");
-        }
-        myWriter.close();
-        } catch (IOException e) {
-        System.out.println("File gagal disimpan.");
-        }
-    }
+    //     }
+    //     else{
+    //         System.out.println("An error occured");
+    //     }
+    //     myWriter.close();
+    //     } catch (IOException e) {
+    //     System.out.println("File gagal disimpan.");
+    //     }
+    // }
     // int mainmenu() {
     //     Scanner input = new Scanner(System.in);
     //     System.out.println("\n1. Sistem Persamaan Linear\n2. Determinan\n3. Matriks Balikan\n4. Interpolasi Polinom\n5. Regresi Linier Berganda\n6. Keluar");
@@ -189,69 +189,40 @@ public class Main {
                             Matriks M = new Matriks(baris, kolom);
                             if(main.bacafile){
                                 M.bacaMatriksFile();
-                                main.issavefile();
-                                if(main.savefile){
-                                    try {
-                                        FileWriter myWriter = new FileWriter("test/output.txt");
-                                        if(M.splinvers(M)){
-                                            M.splinvers(M);
-                                            for(int m=0; m<=M.getLastIdxBrs();m++){
-                                                myWriter.write("X"+(m+1)+" = "+M.getIsi(m, 0)+"\n");
-                                                System.out.println("X"+(m+1)+" = "+M.getIsi(m, 0));
-                                            }
-                                            System.out.println("File berhasil disimpan");
-                                        }
-                                        else{
-                                            myWriter.write("Matriks tidak memiliki balikan, solusi tidak ada");
-                                        }
-                                        myWriter.close();
-                                        } catch (IOException e) {
-                                        System.out.println("File gagal disimpan.");
-                                    }
-                                }
-                                else{
-                                    if(M.splinvers(M)){
-                                        M.splinvers(M);
-                                        for(int m=0; m<=M.getLastIdxBrs();m++){
-                                            System.out.println("X"+(m+1)+" = "+M.getIsi(m, 0));
-                                        }
-                                    }
-                                    else{
-                                        System.out.println("Matriks tidak memiliki balikan, solusi tidak ada");
-                                    }
-                                }
                             }
                             else{
                                 M.bacaMatriks();
-                                main.issavefile();
-                                if(main.savefile){
-                                    try {
-                                        FileWriter myWriter = new FileWriter("test/output.txt");
-                                        if(M.splinvers(M)){
-                                            for(int m=0; m<=M.getLastIdxBrs();m++){
-                                                myWriter.write("X"+(m+1)+" = "+M.getIsi(m, 0)+"\n");
-                                                System.out.println("X"+(m+1)+" = "+M.getIsi(m, 0));
-                                            }
-                                            System.out.println("File berhasil disimpan");
+                            }
+                            main.issavefile();
+                            if(main.savefile){
+                                try {
+                                    FileWriter myWriter = new FileWriter("test/output.txt");
+                                    if(M.splinvers(M)){
+                                        M.splinvers(M);
+                                        for(int m=0; m<=M.getLastIdxBrs();m++){
+                                            myWriter.write("X"+(m+1)+" = "+M.getIsi(m, 0)+"\n");
+                                            System.out.println("X"+(m+1)+" = "+M.getIsi(m, 0));
                                         }
-                                        else{
-                                            myWriter.write("Matriks tidak memiliki balikan, solusi tidak ada");
-                                        }
-                                        myWriter.close();
-                                        } catch (IOException e) {
-                                        System.out.println("File gagal disimpan.");
+                                        System.out.println("File berhasil disimpan");
+                                    }
+                                    else{
+                                        myWriter.write("Matriks tidak memiliki balikan, solusi tidak ada");
+                                    }
+                                    myWriter.close();
+                                    } catch (IOException e) {
+                                    System.out.println("File gagal disimpan.");
+                                }
+                            }
+                            else{
+                                if(M.splinvers(M)){
+                                    M.splinvers(M);
+                                    for(int m=0; m<=M.getLastIdxBrs();m++){
+                                        System.out.println("X"+(m+1)+" = "+M.getIsi(m, 0));
                                     }
                                 }
                                 else{
-                                    if(M.splinvers(M)){
-                                        for(int m=0; m<=M.getLastIdxBrs();m++){
-                                            System.out.println("X"+(m+1)+" = "+M.getIsi(m, 0));
-                                        }
-                                    }
-                                    else{
-                                        System.out.println("Matriks tidak memiliki balikan, solusi tidak ada");
-                                    }
-                                }                  
+                                    System.out.println("Matriks tidak memiliki balikan, solusi tidak ada");
+                                }
                             }
                             input.close();
                             break;
@@ -265,52 +236,31 @@ public class Main {
                             Matriks Mcram = new Matriks(baris, kolom);
                             if(main.bacafile){
                                 Mcram.bacaMatriksFile();
-                                Mcram.cramer(Mcram);
-                                main.issavefile();
-                                if(main.savefile){
-                                    try {
-                                        FileWriter myWriter = new FileWriter("test/output.txt");
-                                        for(int m=0; m<=Mcram.getLastIdxKlm()-1;m++){
-                                            myWriter.write("X"+(m+1)+" = "+Mcram.getIsi(m, 0)+"\n");
-                                            System.out.println("X["+(m+1)+"] = "+Mcram.getIsi(m, 0));
-                                        }
-                                        System.out.println("File berhasil disimpan");
-                                    myWriter.close();
-                                    } 
-                                    catch (IOException e) {
-                                        System.out.println("File gagal disimpan.");
-                                    }
-
-                                }
-                                else{
-                                    for(int m=0; m<=Mcram.getLastIdxKlm()-1;m++){
-                                        System.out.println("X["+(m+1)+"] = "+Mcram.getIsi(m, 0));
-                                    }
-                                }
                             }
                             else{
                                 Mcram.bacaMatriks();
-                                Mcram.cramer(Mcram);
-                                main.issavefile();
-                                if(main.savefile){
-                                    try {
-                                        FileWriter myWriter = new FileWriter("test/output.txt");
-                                        for(int m=0; m<=Mcram.getLastIdxKlm()-1;m++){
-                                            myWriter.write("X"+(m+1)+" = "+Mcram.getIsi(m, 0)+"\n");
-                                            System.out.println("X["+(m+1)+"] = "+Mcram.getIsi(m, 0));
-                                        }
-                                        System.out.println("File berhasil disimpan");
-                                    myWriter.close();
-                                    } 
-                                    catch (IOException e) {
-                                        System.out.println("File gagal disimpan.");
-                                    }
-                                }
-                                else{
+                            }
+                            Mcram.cramer(Mcram);
+                            main.issavefile();
+                            if(main.savefile){
+                                try {
+                                    FileWriter myWriter = new FileWriter("test/output.txt");
                                     for(int m=0; m<=Mcram.getLastIdxKlm()-1;m++){
+                                        myWriter.write("X"+(m+1)+" = "+Mcram.getIsi(m, 0)+"\n");
                                         System.out.println("X["+(m+1)+"] = "+Mcram.getIsi(m, 0));
                                     }
-                                }              
+                                    System.out.println("File berhasil disimpan");
+                                myWriter.close();
+                                } 
+                                catch (IOException e) {
+                                    System.out.println("File gagal disimpan.");
+                                }
+
+                            }
+                            else{
+                                for(int m=0; m<=Mcram.getLastIdxKlm()-1;m++){
+                                    System.out.println("X["+(m+1)+"] = "+Mcram.getIsi(m, 0));
+                                }
                             }
                             userinput.close();
                             break;
@@ -318,112 +268,143 @@ public class Main {
                     }
                     break;
                 case 2: //determinan
-                    main.isbacafile();
-                    Scanner input = new Scanner(System.in);
-                    System.out.print("Masukkan jumlah baris: ");
-                    baris = input.nextInt();
-                    System.out.print("Masukkan jumlah kolom: ");
-                    kolom = input.nextInt();
-                    Matriks M = new Matriks(baris, kolom);
-                    if(main.bacafile){
-                        M.bacaMatriksFile();
-                        main.issavefile();
-                        if(main.savefile){
-                            M.tulisDoubleFile(M.detRed(M)+0.0);
-                            System.out.println("Determinan: "+M.detRed(M));
-                        }
-                        else{
-                            System.out.println("Determinan: "+M.detRed(M));
-                        }
-                    }
-                    else{
-                        M.bacaMatriks();
-                        main.issavefile();
-                        if(main.savefile){
-                            M.tulisDoubleFile(M.detRed(M)+0.0);
-                            System.out.println("Determinan: "+M.detRed(M));
-                        }
-                        else{
-                            System.out.println("Determinan: "+M.detRed(M));
-                        }              
-                    }
-                    input.close();
-                    break;
+                    int submenu1;
+                    Scanner sub1 = new Scanner(System.in);
+                    System.out.println("\n1. Metode reduksi\n2. Metode kofaktor");
+                    System.out.print("Pilih sub-menu: ");
+                    submenu1 = sub1.nextInt();
+                    switch(submenu1){
+                        case 1: //determinan reduksi
+                            main.isbacafile();
+                            Scanner input = new Scanner(System.in);
+                            System.out.print("Masukkan jumlah baris: ");
+                            baris = input.nextInt();
+                            System.out.print("Masukkan jumlah kolom: ");
+                            kolom = input.nextInt();
+                            Matriks M = new Matriks(baris, kolom);
+                            if(main.bacafile){
+                                M.bacaMatriksFile();
+                            }
+                            else{
+                                M.bacaMatriks();
+                            }
+                            main.issavefile();
+                            if(main.savefile){
+                                M.tulisDoubleFile(M.detRed(M)+0.0);
+                                System.out.println("Determinan: "+M.detRed(M));
+                            }
+                            else{
+                                System.out.println("Determinan: "+M.detRed(M));
+                            }
 
-                
+                            input.close();
+                            break;
+                        case 2: //determinan kofaktor
+                            main.isbacafile();
+                            Scanner input1 = new Scanner(System.in);
+                            System.out.print("Masukkan jumlah baris: ");
+                            baris = input1.nextInt();
+                            System.out.print("Masukkan jumlah kolom: ");
+                            kolom = input1.nextInt();
+                            Matriks Mdet = new Matriks(baris, kolom);
+                            if(main.bacafile){
+                                Mdet.bacaMatriksFile();
+                            }
+                            else{
+                                Mdet.bacaMatriks();
+                            }
+                            main.issavefile();
+                            if(main.savefile){
+                                Mdet.tulisDoubleFile(Mdet.deterkofak(Mdet)+0.0);
+                                System.out.println("Determinan: "+Mdet.deterkofak(Mdet));
+                            }
+                            else{
+                                System.out.println("Determinan: "+Mdet.deterkofak(Mdet));
+                            }
+                            input1.close();
+                            break;
+                    }
                 case 3: //invers
-                    main.isbacafile();
-                    Scanner xyz = new Scanner(System.in);
-                    System.out.print("Masukkan jumlah baris: ");
-                    baris = xyz.nextInt();
-                    System.out.print("Masukkan jumlah kolom: ");
-                    kolom = xyz.nextInt();
-                    Matriks Minv = new Matriks(baris, kolom);
-                    if(main.bacafile){
-                        Minv.bacaMatriksFile();
-                        main.issavefile();
-                        if(main.savefile){
-                            try {
-                                FileWriter myWriter = new FileWriter("test/output.txt");
+                    int submenu2;
+                    Scanner sub2 = new Scanner(System.in);
+                    System.out.println("\n1. Metode Gauss\n2. Metode kofaktor/adjoin");
+                    System.out.print("Pilih sub-menu: ");
+                    submenu2 = sub2.nextInt();
+                    switch(submenu2){
+                        case 1: //gauss
+                            main.isbacafile();
+                            Scanner xyz = new Scanner(System.in);
+                            System.out.print("Masukkan jumlah baris: ");
+                            baris = xyz.nextInt();
+                            System.out.print("Masukkan jumlah kolom: ");
+                            kolom = xyz.nextInt();
+                            Matriks Minv = new Matriks(baris, kolom);
+                            if(main.bacafile){
+                                Minv.bacaMatriksFile();
+                            }
+                            else{
+                                Minv.bacaMatriks();
+                            }
+                            main.issavefile();
+                            if(main.savefile){
+                                try {
+                                    FileWriter myWriter = new FileWriter("test/output.txt");
+                                    if(Minv.inverse(Minv)){
+                                        for(int m=0; m<=Minv.getLastIdxBrs();m++){
+                                            myWriter.write(Arrays.toString(Minv.isimatriks[m])+"\n");
+                                            System.out.println(Arrays.toString(Minv.isimatriks[m]));
+                                        }
+                                        System.out.println("File berhasil disimpan");
+                                    }
+                                    else{
+                                        myWriter.write("Matriks tidak memiliki balikan, solusi tidak ada");
+                                    }
+                                    myWriter.close();
+                                    } catch (IOException e) {
+                                    System.out.println("File gagal disimpan.");
+                                }
+                            }
+                            else{
                                 if(Minv.inverse(Minv)){
                                     for(int m=0; m<=Minv.getLastIdxBrs();m++){
-                                        myWriter.write(Arrays.toString(Minv.isimatriks[m])+"\n");
                                         System.out.println(Arrays.toString(Minv.isimatriks[m]));
                                     }
-                                    System.out.println("File berhasil disimpan");
                                 }
                                 else{
-                                    myWriter.write("Matriks tidak memiliki balikan, solusi tidak ada");
+                                    System.out.println("Matriks tidak memiliki balikan, solusi tidak ada");
                                 }
-                                myWriter.close();
-                                } catch (IOException e) {
-                                System.out.println("File gagal disimpan.");
                             }
-                        }
-                        else{
-                            if(Minv.inverse(Minv)){
-                                for(int m=0; m<=Minv.getLastIdxBrs();m++){
+                            xyz.close();
+                            break;
+                        case 2:
+                            main.isbacafile();
+                            Scanner qqq = new Scanner(System.in);
+                            System.out.print("Masukkan jumlah baris: ");
+                            baris = qqq.nextInt();
+                            System.out.print("Masukkan jumlah kolom: ");
+                            kolom = qqq.nextInt();
+                            Matriks Madj = new Matriks(baris, kolom);
+                            if(main.bacafile){
+                                Madj.bacaMatriksFile();
+                            }
+                            else{
+                                Madj.bacaMatriks();
+                            }
+                            main.issavefile();
+                            if(main.savefile){
+                                Madj.tulisMatriksFile(Madj.invKof(Madj));
+                                for(int m=0; m<=M.getLastIdxBrs();m++){
                                     System.out.println(Arrays.toString(Minv.isimatriks[m]));
                                 }
                             }
                             else{
-                                System.out.println("Matriks tidak memiliki balikan, solusi tidak ada");
-                            }
-                        }
-                    }
-                    else{
-                        Minv.bacaMatriks();
-                        main.issavefile();
-                        if(main.savefile){
-                            try {
-                                FileWriter myWriter = new FileWriter("test/output.txt");
-                                if(Minv.inverse(Minv)){
-                                    for(int m=0; m<=Minv.getLastIdxBrs();m++){
-                                        myWriter.write(Arrays.toString(Minv.isimatriks[m])+"\n");
-                                        System.out.println(Arrays.toString(Minv.isimatriks[m]));
-                                    }
-                                    System.out.println("File berhasil disimpan");
-                                }
-                                else{
-                                    myWriter.write("Matriks tidak memiliki balikan, solusi tidak ada");
-                                }
-                                myWriter.close();
-                                } catch (IOException e) {
-                                System.out.println("File gagal disimpan.");
-                            }
-                        }
-                        else{
-                            if(Minv.inverse(Minv)){
                                 for(int m=0; m<=Minv.getLastIdxBrs();m++){
                                     System.out.println(Arrays.toString(Minv.isimatriks[m]));
                                 }
                             }
-                            else{
-                                System.out.println("Matriks tidak memiliki balikan, solusi tidak ada");
-                            }
-                        }                  
+                            qqq.close();
+                            break;
                     }
-                    xyz.close();
                     break;
 
                 
