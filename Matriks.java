@@ -1,5 +1,6 @@
 import java.util.*;
 import java.io.*;
+// import java.lang.Double;
 
 public class Matriks {
     /** Data matriks */
@@ -16,7 +17,7 @@ public class Matriks {
         this.isimatriks = new double[this.baris][this.kolom];
         for (i = 0; i < this.baris; i++) {
             for (j = 0; j < this.kolom; j++) {
-                isimatriks[i][j] = -1;
+                isimatriks[i][j] = -1.0;
             }
         }
     }
@@ -172,6 +173,17 @@ public class Matriks {
         return j;
     }
 
+    boolean isDiagonalOne(){
+        boolean isOne=true;
+        int i=0;
+        while (i<=getLastIdxBrs() && isOne){
+            if (this.isimatriks[i][i]!=1){
+                isOne=false;
+            }
+            i++;
+        }
+        return isOne;
+    }
     // Menulis variabel bertipe double dan bukan matriks ke file
     void tulisDoubleFile(double x){
         try {
@@ -455,25 +467,31 @@ public class Matriks {
         j=0;
         for (i=0;i<=M.getLastIdxBrs();i++){ //iterasi tiap baris
             int a=i;
-            int b=i;
+            boolean z=true;
             boolean tertukar=false;
             while (a<=M.getLastIdxKlm() && !tertukar){
+                int b=i;
                 while(b<=M.getLastIdxBrs() && M.isNol(b, a)){
+                    z=M.isNol(b, a);
                     b++;
                 }
-                if (M.isNol(b, a)==false){
-                    M.tukarBaris(i, b);
-                    tertukar=true;
-                }
-                else{
-                    a++;
+                if(b<=M.getLastIdxBrs())
+                    z=M.isNol(b, a);
+                    if (z==false){
+                        M.tukarBaris(i, b);
+                        tertukar=true;
+                    }
+                a++;
+            }
+            if (!M.isBarisNol(i) || !M.isNoSolution(i)){
+                j=M.idxNotNol(i); //mencari elemen pertama tidak 0 pada suatu baris
+                M.kaliSkalar(i, +(1/M.getIsi(i, j))); //mengubah elemen menjadi lead eselon
+                
+                for(int c=i+1;c<=M.getLastIdxBrs();c++){ //menjadikan setiap baris pada kolom j menjadi 0
+                    M.kurangBaris(c, i, M.getIsi(c, j));
                 }
             }
-            j=M.idxNotNol(i); //mencari elemen pertama tidak 0 pada suatu baris
-            M.kaliSkalar(i, +(1/M.getIsi(i, j))); //mengubah elemen menjadi lead eselon
-            for(int c=i+1;c<=M.getLastIdxBrs();c++){ //menjadikan setiap baris pada kolom j menjadi 0
-                M.kurangBaris(c, i, M.getIsi(c, j));
-            }
+
         }
         for (i=0;i<=M.getLastIdxBrs();i++){
             for (j=0;j<=M.getLastIdxBrs();j++){
@@ -546,6 +564,101 @@ public class Matriks {
         return M;
     }
     
+    boolean solveGauss (Matriks M) {
+        boolean error = true;
+        if (M.isDiagonalOne()){
+            error = false;
+            }
+        return error;
+        }
+
+        
+        double deterkofak(Matriks M){
+            double det = 0;
+            if(M.getBaris()==2){
+                det = (M.getIsi(0, 0)*M.getIsi(1, 1)) - (M.getIsi(0, 1)*M.getIsi(1, 0));
+            }
+            else{ // Matriks nxn dengan n>2
+                for(int i=0;i<=M.getLastIdxBrs();i++){
+                    Matriks cof = new Matriks(M.getBaris()-1, M.getKolom()-1);
+                    for(int m = 0;m<=M.getLastIdxBrs();m++){
+                        for(int n = 1;n<=M.getLastIdxBrs();n++){
+                            if(m!=i){
+                                if(m>i){
+                                    cof.setIsi(m-1, n-1, M.getIsi(m, n));
+                                }
+                                else{
+                                    cof.setIsi(m, n-1, M.getIsi(m, n));
+                                }
+                            }
+                        }
+                    }
+                    if(i%2 == 0){
+                        det += M.getIsi(i, 0)*deterkofak(cof);
+                    }
+                    else{
+                        det -= M.getIsi(i, 0)*deterkofak(cof);
+                    }
+                } 
+            }
+            return det;
+        }
+
+        Matriks invKof(Matriks M){
+            //membuat matriks kofaktor
+            Matriks cof = new Matriks(M.getBaris(), M.getKolom());
+            for(int i =0;i<=M.getLastIdxBrs();i++){
+                for(int j=0;j<=M.getLastIdxKlm();j++){
+                    Matriks Mdet = new Matriks(cof.getBaris()-1, cof.getKolom()-1);
+                    for(int m=0;m<=cof.getLastIdxBrs();m++){
+                        for(int n=0;n<=cof.getLastIdxKlm();n++){
+                            if(m!=i && n!=j){
+                                if(m>i && n>j){
+                                    Mdet.setIsi(m-1, n-1, M.getIsi(m, n));
+                                }
+                                else if(m>i){
+                                    Mdet.setIsi(m-1, n, M.getIsi(m, n));
+                                }
+                                else if(n>j){
+                                    Mdet.setIsi(m, n-1, M.getIsi(m, n));
+                                }
+                                else{
+                                    Mdet.setIsi(m, n, M.getIsi(m, n));
+                                }
+                            }
+                        }
+                    }
+                    if(i%2 == 0){
+                        if(j%2!=0){
+                            cof.setIsi(i, j, (-1)*Mdet.deterkofak(Mdet));
+                        }
+                        else{
+                            cof.setIsi(i, j, Mdet.deterkofak(Mdet));
+                        }
+                    }
+                    else{
+                        if(j%2==0){
+                            cof.setIsi(i, j, (-1)*Mdet.deterkofak(Mdet));
+                        }
+                        else{
+                            cof.setIsi(i, j, Mdet.deterkofak(Mdet));
+                        }
+                    }
+                }
+            }
+            // Tranpose
+            Matriks adj = new Matriks(cof.getBaris(), cof.getKolom());
+            for(int i = 0;i<=cof.getLastIdxBrs();i++){
+                for(int j = 0;j<=cof.getLastIdxKlm();j++){
+                    adj.setIsi(i, j, cof.getIsi(j, i));
+                }
+            }
+            //kali dengan 1/det
+            for(int i=0;i<=M.getLastIdxBrs();i++){
+                adj.kaliSkalar(i, 1/M.deterkofak(M));
+            }
+            return adj;
+        }
     // public static void main(String[] args){
     //     Matriks matriks1 = new Matriks(3, 4);
     //     matriks1.bacaMatriks();
