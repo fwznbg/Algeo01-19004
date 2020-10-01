@@ -26,28 +26,65 @@ public class Main {
             savefile =false;
         }
     }
-    int mainmenu() {
-        Scanner input = new Scanner(System.in);
-        System.out.println("\n1. Sistem Persamaan Linear\n2. Determinan\n3. Matriks Balikan\n4. Interpolasi Polinom\n5. Regresi Linier Berganda\n6. Keluar");
-        System.out.print("Pilih menu: ");
-        int menu = input.nextInt();
-        input.close();
-        return menu; 
+    void tulisSolveGauss(Matriks Mgauss){
+        double a;
+        for (int i=Mgauss.getLastIdxBrs();i>=0;i--){
+            a=Mgauss.getIsi(i, Mgauss.getLastIdxKlm());
+            if (i==Mgauss.getLastIdxBrs()){
+                System.out.print("X"+(i+1)+" = "+a+";");
+            }
+            else{
+                double sum=a;
+                double x;
+                System.out.print("X"+(i+1)+" = "+sum);
+                for (int j=Mgauss.getLastIdxKlm()-1;j>Mgauss.idxKlmOne(i);j--){
+                    x=Mgauss.getIsi(i, j)*Mgauss.getIsi(j, Mgauss.getLastIdxKlm());
+                    sum-=x;
+                    System.out.print("-"+x);
+                }
+                System.out.print(" = "+sum+";");
+            }
+            System.out.println();
+        }
     }
-    int submenu1(){
-        Scanner sub = new Scanner(System.in);
-        System.out.println("\n1. Metode eliminasi Gauss\n2. Metode eliminasi Gauss-Jordan\n3. Metode matriks balikan\n4. Kaidah Cramer");
-        System.out.print("Pilih sub-menu: ");
-        int submenu = sub.nextInt();
-        sub.close();
-        return submenu;
+
+    void tulisSolveGaussFile(){
+        try {
+        FileWriter myWriter = new FileWriter("test/output.txt");
+        if(solveable){
+
+        }
+        else{
+            System.out.println("An error occured");
+        }
+        myWriter.close();
+        } catch (IOException e) {
+        System.out.println("File gagal disimpan.");
+        }
     }
+    // int mainmenu() {
+    //     Scanner input = new Scanner(System.in);
+    //     System.out.println("\n1. Sistem Persamaan Linear\n2. Determinan\n3. Matriks Balikan\n4. Interpolasi Polinom\n5. Regresi Linier Berganda\n6. Keluar");
+    //     System.out.print("Pilih menu: ");
+    //     int menu = input.nextInt();
+    //     input.close();
+    //     return menu; 
+    // }
+    // int submenu1(){
+    //     Scanner sub = new Scanner(System.in);
+    //     System.out.println("\n1. Metode eliminasi Gauss\n2. Metode eliminasi Gauss-Jordan\n3. Metode matriks balikan\n4. Kaidah Cramer");
+    //     System.out.print("Pilih sub-menu: ");
+    //     int submenu = sub.nextInt();
+    //     sub.close();
+    //     return submenu;
+    // }
     // class inputclass{
     //     static Scanner in = new Scanner(System.in);
     // }
     public static void main(String[] args){
         Main main = new Main();
         Scanner inputmenu = new Scanner(System.in);
+        int baris, kolom;
         int menu = 0;
         // System.out.println("1. Sistem Persamaan Linear\n2. Determinan\n3. Matriks Balikan\n4. Interpolasi Polinom\n5. Regresi Linier Berganda\n6. Keluar");
         // Systgm.out.print("Pilih menu: ");
@@ -55,6 +92,7 @@ public class Main {
         // System.out.println("\n1. Sistem Persamaan Linear\n2. Determinan\n3. Matriks Balikan\n4. Interpolasi Polinom\n5. Regresi Linier Berganda\n6. Keluar");
         // System.out.print("Pilih menu: ");
         boolean exit = false;
+        
         while(!exit && inputmenu.hasNextInt()){
             System.out.println("\n1. Sistem Persamaan Linear\n2. Determinan\n3. Matriks Balikan\n4. Interpolasi Polinom\n5. Regresi Linier Berganda\n6. Keluar");
             System.out.print("Pilih menu: ");
@@ -76,18 +114,79 @@ public class Main {
                     // int submenu = main.submenu1();
                     switch(submenu){
                         case 1: //gauss
+                            main.isbacafile();
+                            Scanner gauss = new Scanner(System.in);
+                            System.out.print("Masukkan jumlah baris: ");
+                            baris = gauss.nextInt();
+                            System.out.print("Masukkan jumlah kolom: ");
+                            kolom = gauss.nextInt();
+                            Matriks Mgauss = new Matriks(baris, kolom);
+                            if(main.bacafile){
+                                Mgauss.bacaMatriksFile();
+                                main.issavefile();
+                                boolean solveable = Mgauss.solveGauss(Mgauss.gauss(Mgauss));
+                                if(main.savefile){
+                                    // try {
+                                    //     FileWriter myWriter = new FileWriter("test/output.txt");
+                                    //     if(solveable){
+
+                                    //     }
+                                    //     else{
+                                    //         System.out.println("An error occured");
+                                    //     }
+                                    //     myWriter.close();
+                                    //     } catch (IOException e) {
+                                    //     System.out.println("File gagal disimpan.");
+                                    //     }
+                                    }
+                                else{
+                                    if(solveable){
+                                        main.tulisSolveGauss(Mgauss);
+                                    }
+                                    else{
+                                        System.out.println("An error occured");
+                                    }
+                                }
+                            }
+                            else{
+                                Mgauss.bacaMatriks();
+                                main.issavefile();
+                                boolean solveable = Mgauss.solveGauss(Mgauss.gauss(Mgauss));
+                                if(main.savefile){
+                                    // try {
+                                    //     FileWriter myWriter = new FileWriter("test/output.txt");
+                                    //     if(solveable){
+
+                                    //     }
+                                    //     else{
+                                    //         System.out.println("An error occured");
+                                    //     }
+                                    //     myWriter.close();
+                                    //     } catch (IOException e) {
+                                    //     System.out.println("File gagal disimpan.");
+                                    //     }
+                                    }
+                                    else{
+                                        if(solveable){
+                                            main.tulisSolveGauss(Mgauss);
+                                        }
+                                        else{
+                                            System.out.println("An error occured");
+                                        }
+                                    }
+                            }
+                            gauss.close();
                             break;
                         case 2:     //gauss-jordan
                             break;
                         case 3:     //metode invers
                             main.isbacafile();
                             Scanner input = new Scanner(System.in);
-                            int brs, klm;
                             System.out.print("Masukkan jumlah baris: ");
-                            brs = input.nextInt();
+                            baris = input.nextInt();
                             System.out.print("Masukkan jumlah kolom: ");
-                            klm = input.nextInt();
-                            Matriks M = new Matriks(brs, klm);
+                            kolom = input.nextInt();
+                            Matriks M = new Matriks(baris, kolom);
                             if(main.bacafile){
                                 M.bacaMatriksFile();
                                 main.issavefile();
@@ -159,12 +258,11 @@ public class Main {
                         case 4: //cramer
                             main.isbacafile();
                             Scanner userinput = new Scanner(System.in);
-                            int a, b;
                             System.out.print("Masukkan jumlah baris: ");
-                            a = userinput.nextInt();
+                            baris = userinput.nextInt();
                             System.out.print("Masukkan jumlah kolom: ");
-                            b = userinput.nextInt();
-                            Matriks Mcram = new Matriks(a, b);
+                            kolom = userinput.nextInt();
+                            Matriks Mcram = new Matriks(baris, kolom);
                             if(main.bacafile){
                                 Mcram.bacaMatriksFile();
                                 Mcram.cramer(Mcram);
@@ -222,12 +320,11 @@ public class Main {
                 case 2: //determinan
                     main.isbacafile();
                     Scanner input = new Scanner(System.in);
-                    int brs, klm;
                     System.out.print("Masukkan jumlah baris: ");
-                    brs = input.nextInt();
+                    baris = input.nextInt();
                     System.out.print("Masukkan jumlah kolom: ");
-                    klm = input.nextInt();
-                    Matriks M = new Matriks(brs, klm);
+                    kolom = input.nextInt();
+                    Matriks M = new Matriks(baris, kolom);
                     if(main.bacafile){
                         M.bacaMatriksFile();
                         main.issavefile();
@@ -257,12 +354,11 @@ public class Main {
                 case 3: //invers
                     main.isbacafile();
                     Scanner xyz = new Scanner(System.in);
-                    int x, y;
                     System.out.print("Masukkan jumlah baris: ");
-                    x = xyz.nextInt();
+                    baris = xyz.nextInt();
                     System.out.print("Masukkan jumlah kolom: ");
-                    y = xyz.nextInt();
-                    Matriks Minv = new Matriks(x, y);
+                    kolom = xyz.nextInt();
+                    Matriks Minv = new Matriks(baris, kolom);
                     if(main.bacafile){
                         Minv.bacaMatriksFile();
                         main.issavefile();
