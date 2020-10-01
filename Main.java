@@ -105,13 +105,6 @@ public class Main {
                     System.out.println("\n1. Metode eliminasi Gauss\n2. Metode eliminasi Gauss-Jordan\n3. Metode matriks balikan\n4. Kaidah Cramer");
                     System.out.print("Pilih sub-menu: ");
                     submenu = sub.nextInt();
-                    // while(submenu<0 || submenu>4){
-                    //     System.out.println("\nMasukan tidak valid");
-                    //     System.out.println("1. Metode eliminasi Gauss\n2. Metode eliminasi Gauss-Jordan\n3. Metode matriks balikan\n4. Kaidah Cramer");
-                    //     System.out.print("Pilih sub-menu: ");
-                    //     submenu = scanner.nextInt();
-                    // }
-                    // int submenu = main.submenu1();
                     switch(submenu){
                         case 1: //gauss
                             main.isbacafile();
@@ -393,13 +386,13 @@ public class Main {
                             main.issavefile();
                             if(main.savefile){
                                 Madj.tulisMatriksFile(Madj.invKof(Madj));
-                                for(int m=0; m<=M.getLastIdxBrs();m++){
-                                    System.out.println(Arrays.toString(Minv.isimatriks[m]));
+                                for(int m=0; m<=Madj.getLastIdxBrs();m++){
+                                    System.out.println(Arrays.toString(Madj.invKof(Madj).isimatriks[m]));
                                 }
                             }
                             else{
-                                for(int m=0; m<=Minv.getLastIdxBrs();m++){
-                                    System.out.println(Arrays.toString(Minv.isimatriks[m]));
+                                for(int m=0; m<=Madj.getLastIdxBrs();m++){
+                                    System.out.println(Arrays.toString(Madj.invKof(Madj).isimatriks[m]));
                                 }
                             }
                             qqq.close();
