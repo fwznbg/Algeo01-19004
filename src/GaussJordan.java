@@ -5,7 +5,7 @@ import java.io.*;
 
 public class GaussJordan {
 
-    public void gaussjor(Matriks M) {
+    public Matriks gaussjor(Matriks M) {
         double x;
         int j=M.idxKlmOne(1);
         int i=1;
@@ -16,25 +16,16 @@ public class GaussJordan {
             }
             i++;
         }
-        /*while (n<M.getLastIdxKlm()-1){
-            i=1;
-            a=M.idxKlmOne(i);
-            while (i<=M.getLastIdxBrs() && (a+n)<=M.getLastIdxKlm()){
-                a=M.idxKlmOne(i);
-                x=M.getIsi(a-1, a+n);
-                M.kurangBaris(a-1, a+n, x);
-                i++;
-                System.out.println(a+n);
-            }
-            n+=1;
-        }*/
-        M.tulisMatriks();
-            
+        return M;
     }
     public static void main(String[] args){
         GaussJordan gj= new GaussJordan();
-        Matriks M=new Matriks(4,5);
+        Gauss g= new Gauss();
+        Matriks M=new Matriks(3,4);
         M.bacaMatriks();
-        gj.gaussjor(M);
+        Matriks x;
+        x = gj.gaussjor(g.gauss(M));
+        x.tulisMatriks();
+        
     }
 }

@@ -24,9 +24,9 @@ public class Gauss {
                     }
                 a++;
             }
-            if (!M.isBarisNol(i) || !M.isNoSolution(i)){
+            if (!M.isBarisNol(i) && !M.isNoSolution(i)){
                 j=M.idxNotNol(i); //mencari elemen pertama tidak 0 pada suatu baris
-                M.kaliSkalar(i, +(1/M.getIsi(i, j))); //mengubah elemen menjadi lead eselon
+                M.kaliSkalar(i, 1/M.getIsi(i, j)); //mengubah elemen menjadi lead eselon
                 
                 for(int c=i+1;c<=M.getLastIdxBrs();c++){ //menjadikan setiap baris pada kolom j menjadi 0
                     M.kurangBaris(c, i, M.getIsi(c, j));
