@@ -143,12 +143,8 @@ public class Matriks {
     // Membaca matriks dari file.txt
     void bacaMatriksFile() {
         FileInputStream fis;
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Masukkan nama file.txt: ");
-        String namafile = scanner.nextLine();
-
         try {
-            fis = new FileInputStream("test/"+namafile);
+            fis = new FileInputStream("test/input.txt");
             Scanner sc=new Scanner(fis);
             int i, j;
             for(i=0;i<this.baris;i++){
@@ -200,8 +196,9 @@ public class Matriks {
         return determinan*Math.pow(-1, tkrbrs);
     }
 
-    void inverse(Matriks M)
+    boolean inverse(Matriks M)
     {
+        boolean inv = true;
         if (M.getBaris()==M.getKolom())     // jumlah baris dan kolom sama
         {
             int i,j;
@@ -225,7 +222,7 @@ public class Matriks {
             // membuat matriks segitiga atas
             for(j=0; j<M.getLastIdxKlm(); j++){
                 if(M.getIsi(j, j) == 0){
-                    System.out.println("Matriks tidak memiliki balikan");
+                    inv = false;
                     break;
                 }
                 for(i=j+1; i<=M.getLastIdxBrs(); i++){
@@ -240,7 +237,7 @@ public class Matriks {
             // membuat matriks segitiga bawah
             for(j=1; j<=M.getLastIdxKlm(); j++){
                 if(M.getIsi(j, j) == 0){
-                    System.out.println("Matriks tidak memiliki balikan");
+                    inv = false;
                     break;
                 }
                 for(i=0; i<j; i++){
@@ -253,15 +250,17 @@ public class Matriks {
             // baris paling bawah dikali -1
             Minv.kaliSkalar(Minv.getLastIdxBrs(), -1);
 
-            Minv.tulisMatriks();
+            // mwngisi matriks inputan (M) dengan Minv
+            for(int m=0; m<Minv.getBaris();m++){
+                for(int n=0; n<Minv.getKolom();n++){
+                    M.setIsi(m, n, Minv.getIsi(m, n));
+                }
+            }
         }
-        else
-        {
-            System.out.println("Matriks tidak memiliki balikan");
-        }
+        return inv;
     }
 
-    void splinvers(Matriks M){
+    boolean splinvers(Matriks M){
         int i, j;
         Matriks Minv = new Matriks(M.getBaris(), M.getKolom()-1);   // Matriks yang akan diinvers
         Matriks Mb = new Matriks(M.getBaris(), 1);                 
@@ -335,11 +334,10 @@ public class Matriks {
             }
             hasil.setIsi(i, 0, sum);
         }
-        if(inv){
-            for(int m=0; m<=hasil.getLastIdxBrs();m++){
-                System.out.println("X"+(m+1)+" = "+hasil.getIsi(m, 0));
-            }
+        for(int m=0; m<hasil.getBaris();m++){
+            M.setIsi(m, 0, hasil.getIsi(m, 0));
         }
+        return inv;
     }
 
     void gaussjor(Matriks M) {
@@ -402,36 +400,36 @@ public class Matriks {
 
     }
 
-    // void regresi () {
-    //     Scanner xinput = new Scanner(System.in);
-    //     int n = xinput.nextInt();
-    //     int k = xinput.nextInt();
-    //     double Elmtx;
-    //     Matriks M= new Matriks(k+1, k+2); //inisiasi matriks
-    //     M.setIsi(0, 0, 1); // inisialisasi elemen 0,0 dengan 1
-    //     for (int j=0; j<k+2;j++){ 
-    //         Elmtx= xinput.nextDouble();
-    //         for (int i=0;i<k+1;i++){
-    //             if(i==0 && j<k-1){
-    //                 M.setIsi(i, j+1, Elmt);
-    //             }
-    //             if (i!=0){
-    //                 M.setIsi(i, j, Elmt);
-    //             }
-    //         }
-    //     double Elmty;
-    //     Elmty= xinput.nextDouble();
-    //     for (int i=0;i<k+1;i++){
-    //         M.setIsi(k+1, j, x);
-    //     }
-    //     for (int i=1;i<k;i++){
-    //         for (int j=1; j<k;j++){
-    //             M.kaliSkalar(i, M.getIsi(i, 0));
-    //         }
-    //     }
-    //     M.tulisMatriks();  
-    // }
-    // }
+    void regresi () {
+        Scanner xinput = new Scanner(System.in);
+        int n = xinput.nextInt();
+        int k = xinput.nextInt();
+        double Elmtx;
+        Matriks M= new Matriks(k+1, k+2); //inisiasi matriks
+        M.setIsi(0, 0, 1); // inisialisasi elemen 0,0 dengan 1
+        for (int j=0; j<k+2;j++){ 
+            Elmtx= xinput.nextDouble();
+            for (int i=0;i<k+1;i++){
+                if(i==0 && j<k-1){
+                    M.setIsi(i, j+1, Elmt);
+                }
+                if (i!=0){
+                    M.setIsi(i, j, Elmt);
+                }
+            }
+        double Elmty;
+        Elmty= xinput.nextDouble();
+        for (int i=0;i<k+1;i++){
+            M.setIsi(k+1, j, x);
+        }
+        for (int i=1;i<k;i++){
+            for (int j=1; j<k;j++){
+                M.kaliSkalar(i, M.getIsi(i, 0));
+            }
+        }
+        M.tulisMatriks();  
+    }
+    }
 
     Matriks gauss(Matriks M) {
         int i,j;
@@ -529,10 +527,15 @@ public class Matriks {
         }
         
     }
-    public static void main(String[] args){
-        Matriks matriks1 = new Matriks(3, 4);
-        matriks1.bacaMatriks();
-        matriks1 = matriks1.gauss(matriks1);
-        matriks1.tulisMatriks();
-    }
+    // public static void main(String[] args){
+    //     Matriks matriks1 = new Matriks(3, 4);
+    //     matriks1.bacaMatriks();
+    //     if(matriks1.splinvers(matriks1)){
+    //         System.out.println("bisa");
+    //     }
+    //     else{
+    //         System.out.println("ga");
+    //     }
+    //     matriks1.tulisMatriks();
+    // }
 }
