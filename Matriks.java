@@ -708,6 +708,35 @@ public class Matriks {
     void tulisSolveGaussFile(Matriks M){
         try {
             FileWriter myWriter = new FileWriter("test/output.txt");
+            double a;
+            for (int i=M.getLastIdxBrs();i>=0;i--){
+                a=M.getIsi(i, M.getLastIdxKlm());
+                if (i==M.getLastIdxBrs()){
+                    myWriter.write("X"+(i+1)+" = "+a+";");
+                }
+                else{
+                    double sum=a;
+                    double x;
+                    myWriter.write("X"+(i+1)+" = "+sum);
+                    for (int j=M.getLastIdxKlm()-1;j>M.idxKlmOne(i);j--){
+                        x=M.getIsi(i, j)*M.getIsi(j, M.getLastIdxKlm());
+                        sum-=x;
+                        myWriter.write("-"+x);
+                    }
+                    myWriter.write(" = "+sum+";");
+                }
+                myWriter.write("\n");
+            }
+            System.out.println("File berhasil disimpan");
+            myWriter.close();
+            } catch (IOException e) {
+            System.out.println("File gagal disimpan.");
+        }
+    }
+    
+    void tulisSolveGaussJFile(Matriks M){
+        try {
+            FileWriter myWriter = new FileWriter("test/output.txt");
             switch(M.solveGJ(M)){
                 case 1:
                     int a=M.getLastIdxBrs();
