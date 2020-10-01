@@ -26,27 +26,6 @@ public class Main {
             savefile =false;
         }
     }
-    void tulisSolveGauss(Matriks Mgauss){
-        double a;
-        for (int i=Mgauss.getLastIdxBrs();i>=0;i--){
-            a=Mgauss.getIsi(i, Mgauss.getLastIdxKlm());
-            if (i==Mgauss.getLastIdxBrs()){
-                System.out.print("X"+(i+1)+" = "+a+";");
-            }
-            else{
-                double sum=a;
-                double x;
-                System.out.print("X"+(i+1)+" = "+sum);
-                for (int j=Mgauss.getLastIdxKlm()-1;j>Mgauss.idxKlmOne(i);j--){
-                    x=Mgauss.getIsi(i, j)*Mgauss.getIsi(j, Mgauss.getLastIdxKlm());
-                    sum-=x;
-                    System.out.print("-"+x);
-                }
-                System.out.print(" = "+sum+";");
-            }
-            System.out.println();
-        }
-    }
 
     // void tulisSolveGaussFile(){
     //     try {

@@ -668,6 +668,156 @@ public class Matriks {
         }
         return adj;
     }
+
+    int solveGJ (Matriks M) {
+        int kondisi = 0;
+        if (M.isBarisNol(M.getLastIdxBrs())){
+            kondisi = 1;
+        }
+        else if(M.isNoSolution(M.getLastIdxBrs())){
+            kondisi = 2;
+        }
+        else{
+            kondisi = 3;
+        }
+        return kondisi;
+    }
+
+    void tulisSolveGauss(Matriks M){
+        double a;
+        for (int i=M.getLastIdxBrs();i>=0;i--){
+            a=M.getIsi(i, M.getLastIdxKlm());
+            if (i==M.getLastIdxBrs()){
+                System.out.print("X"+(i+1)+" = "+a+";");
+            }
+            else{
+                double sum=a;
+                double x;
+                System.out.print("X"+(i+1)+" = "+sum);
+                for (int j=M.getLastIdxKlm()-1;j>M.idxKlmOne(i);j--){
+                    x=M.getIsi(i, j)*M.getIsi(j, M.getLastIdxKlm());
+                    sum-=x;
+                    System.out.print("-"+x);
+                }
+                System.out.print(" = "+sum+";");
+            }
+            System.out.println();
+        }
+    }
+
+    void tulisSolveGaussFile(Matriks M){
+        try {
+            FileWriter myWriter = new FileWriter("test/output.txt");
+            switch(M.solveGJ(M)){
+                case 1:
+                    int a=M.getLastIdxBrs();
+                    while(M.isBarisNol(a) && a>=0){
+                        a--;
+                    }
+                    if (a!=0){
+                        for (int j=M.getLastIdxKlm()-1;j>=0;j--){
+                            int z=M.idxBrsNotNol(j);
+                            double elmt=1/M.getIsi(z, j);
+                            myWriter.write("x"+(j+1)+" = ");
+                            if (!M.isIdxAfterKlmNotNol(z, j)){
+                                if(M.idxNotNol(z)!=j){
+                                    myWriter.write(elmt+"("+M.getIsi(z, M.getLastIdxKlm()));
+                                    for (int b=j-1;b>=M.idxNotNol(z);b--){
+                                        if(!M.isNol(z, b)){
+                                            if (M.getIsi(z, b)>=0){
+                                                myWriter.write(M.getIsi(z, b)*-1+"(u"+(b+1)+")");
+                                            }
+                                            else{
+                                                myWriter.write("+"+M.getIsi(z, b)*-1+"(u"+(b+1)+")");
+                                            }
+                                        }
+                                    }
+                                    myWriter.write(")");
+                                }
+                                else{
+                                    myWriter.write(""+elmt*M.getIsi(z, M.getLastIdxKlm()));
+                                }
+                            }
+                            else{
+                                myWriter.write("u"+(j+1));
+                            }
+                            myWriter.write("\n");
+                        }
+                    }
+                    else{
+                        myWriter.write("Matriks memiliki jumlah solusi yang tak terhingga\n");
+                    }
+                    break;
+                case 2:
+                    myWriter.write("Matriks tidak memiliki solusi\n");
+                    break;
+                case 3:
+                    Matriks Sol= new Matriks(1, M.getLastIdxKlm());
+                    for (int i=0;i<=M.getLastIdxBrs();i++){
+                        myWriter.write("x"+(i+1)+" = "+M.getIsi(i, M.getLastIdxKlm())+"\n");
+                        Sol.setIsi(0, i, M.getIsi(i, M.getLastIdxKlm()));
+                    }
+                    break;
+            }
+            System.out.println("File berhasil disimpan");
+            myWriter.close();
+            } catch (IOException e) {
+            System.out.println("File gagal disimpan.");
+        }
+    }
+    void tulisSolveGaussJ(Matriks M){
+        switch(M.solveGJ(M)){
+            case 1:
+                int a=M.getLastIdxBrs();
+                while(M.isBarisNol(a) && a>=0){
+                    a--;
+                }
+                if (a!=0){
+                    for (int j=M.getLastIdxKlm()-1;j>=0;j--){
+                        int z=M.idxBrsNotNol(j);
+                        double elmt=1/M.getIsi(z, j);
+                        System.out.print("x"+(j+1)+" = ");
+                        if (!M.isIdxAfterKlmNotNol(z, j)){
+                            if(M.idxNotNol(z)!=j){
+                                System.out.print(elmt+"("+M.getIsi(z, M.getLastIdxKlm()));
+                                for (int b=j-1;b>=M.idxNotNol(z);b--){
+                                    if(!M.isNol(z, b)){
+                                        if (M.getIsi(z, b)>=0){
+                                            System.out.print(M.getIsi(z, b)*-1+"(u"+(b+1)+")");
+                                        }
+                                        else{
+                                            System.out.print("+"+M.getIsi(z, b)*-1+"(u"+(b+1)+")");
+                                        }
+                                    }
+                                }
+                                System.out.print(")");
+                            }
+                            else{
+                                System.out.print(elmt*M.getIsi(z, M.getLastIdxKlm()));
+                            }
+                        }
+                        else{
+                            System.out.print("u"+(j+1));
+                        }
+                        System.out.println();
+                    }
+                }
+                else{
+                    System.out.println("Matriks memiliki jumlah solusi yang tak terhingga");
+                }
+                break;
+            case 2:
+                System.out.println("Matriks tidak memiliki solusi");
+                break;
+            case 3:
+                Matriks Sol= new Matriks(1, M.getLastIdxKlm());
+                for (int i=0;i<=M.getLastIdxBrs();i++){
+                    System.out.println("x"+(i+1)+" = "+M.getIsi(i, M.getLastIdxKlm()));
+                    Sol.setIsi(0, i, M.getIsi(i, M.getLastIdxKlm()));
+                }
+                break;
+        }
+    }
     // public static void main(String[] args){
     //     Matriks matriks1 = new Matriks(3, 4);
     //     matriks1.bacaMatriks();
