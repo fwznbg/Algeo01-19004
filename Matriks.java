@@ -704,6 +704,21 @@ public class Matriks {
             System.out.println();
         }
     }
+    int idxBrsNotNol(int j){
+        int i=0;
+        while (i<=getLastIdxBrs() && isNol(i, j)){
+            i++;
+        }
+        return i;
+    }
+
+    boolean isIdxAfterKlmNotNol(int i, int j){
+        int a=j+1;
+        while (a<getLastIdxKlm() && isNol(i, a)){
+            a++;
+        }
+        return a!=getLastIdxKlm();
+    }
 
     void tulisSolveGaussFile(Matriks M){
         try {

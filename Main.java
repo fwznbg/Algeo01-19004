@@ -27,49 +27,12 @@ public class Main {
         }
     }
 
-    // void tulisSolveGaussFile(){
-    //     try {
-    //     FileWriter myWriter = new FileWriter("test/output.txt");
-    //     if(solveable){
-
-    //     }
-    //     else{
-    //         System.out.println("An error occured");
-    //     }
-    //     myWriter.close();
-    //     } catch (IOException e) {
-    //     System.out.println("File gagal disimpan.");
-    //     }
-    // }
-    // int mainmenu() {
-    //     Scanner input = new Scanner(System.in);
-    //     System.out.println("\n1. Sistem Persamaan Linear\n2. Determinan\n3. Matriks Balikan\n4. Interpolasi Polinom\n5. Regresi Linier Berganda\n6. Keluar");
-    //     System.out.print("Pilih menu: ");
-    //     int menu = input.nextInt();
-    //     input.close();
-    //     return menu; 
-    // }
-    // int submenu1(){
-    //     Scanner sub = new Scanner(System.in);
-    //     System.out.println("\n1. Metode eliminasi Gauss\n2. Metode eliminasi Gauss-Jordan\n3. Metode matriks balikan\n4. Kaidah Cramer");
-    //     System.out.print("Pilih sub-menu: ");
-    //     int submenu = sub.nextInt();
-    //     sub.close();
-    //     return submenu;
-    // }
-    // class inputclass{
-    //     static Scanner in = new Scanner(System.in);
-    // }
     public static void main(String[] args){
         Main main = new Main();
         Scanner inputmenu = new Scanner(System.in);
         int baris, kolom;
         int menu = 0;
-        // System.out.println("1. Sistem Persamaan Linear\n2. Determinan\n3. Matriks Balikan\n4. Interpolasi Polinom\n5. Regresi Linier Berganda\n6. Keluar");
-        // Systgm.out.print("Pilih menu: ");
-        // menu = scanner.nextInt();
-        // System.out.println("\n1. Sistem Persamaan Linear\n2. Determinan\n3. Matriks Balikan\n4. Interpolasi Polinom\n5. Regresi Linier Berganda\n6. Keluar");
-        // System.out.print("Pilih menu: ");
+
         boolean exit = false;
         
         while(!exit && inputmenu.hasNextInt()){
@@ -95,61 +58,52 @@ public class Main {
                             Matriks Mgauss = new Matriks(baris, kolom);
                             if(main.bacafile){
                                 Mgauss.bacaMatriksFile();
+                            }
+                            else{
+                                Mgauss.bacaMatriks();
+                            }
                                 main.issavefile();
                                 boolean solveable = Mgauss.solveGauss(Mgauss.gauss(Mgauss));
                                 if(main.savefile){
-                                    // try {
-                                    //     FileWriter myWriter = new FileWriter("test/output.txt");
-                                    //     if(solveable){
-
-                                    //     }
-                                    //     else{
-                                    //         System.out.println("An error occured");
-                                    //     }
-                                    //     myWriter.close();
-                                    //     } catch (IOException e) {
-                                    //     System.out.println("File gagal disimpan.");
-                                    //     }
-                                    }
-                                else{
                                     if(solveable){
-                                        main.tulisSolveGauss(Mgauss);
+                                        Mgauss.tulisSolveGaussFile(Mgauss.gauss(Mgauss));
                                     }
                                     else{
                                         System.out.println("An error occured");
                                     }
                                 }
+                                else{
+                                    if(solveable){
+                                        Mgauss.tulisSolveGauss(Mgauss.gauss(Mgauss));
+                                    }
+                                    else{
+                                        System.out.println("An error occured");
+                                    }
+                                }
+                            break;
+                        case 2:     //gauss-jordan
+                            main.isbacafile();
+                            Scanner gauss = new Scanner(System.in);
+                            System.out.print("Masukkan jumlah baris: ");
+                            baris = gauss.nextInt();
+                            System.out.print("Masukkan jumlah kolom: ");
+                            kolom = gauss.nextInt();
+                            Matriks Mgauss = new Matriks(baris, kolom);
+                            if(main.bacafile){
+                                Mgauss.bacaMatriksFile();
                             }
                             else{
                                 Mgauss.bacaMatriks();
-                                main.issavefile();
-                                boolean solveable = Mgauss.solveGauss(Mgauss.gauss(Mgauss));
-                                if(main.savefile){
-                                    // try {
-                                    //     FileWriter myWriter = new FileWriter("test/output.txt");
-                                    //     if(solveable){
-
-                                    //     }
-                                    //     else{
-                                    //         System.out.println("An error occured");
-                                    //     }
-                                    //     myWriter.close();
-                                    //     } catch (IOException e) {
-                                    //     System.out.println("File gagal disimpan.");
-                                    //     }
-                                    }
-                                    else{
-                                        if(solveable){
-                                            main.tulisSolveGauss(Mgauss);
-                                        }
-                                        else{
-                                            System.out.println("An error occured");
-                                        }
-                                    }
                             }
-                            gauss.close();
-                            break;
-                        case 2:     //gauss-jordan
+                            main.issavefile();
+                            if(main.savefile){
+                                Mgauss.gaussjor(Mgauss.gauss(Mgauss));
+                                Mgauss.tulisSolveGaussJFile(Mgauss);
+                                }
+                            else{
+                                Mgauss.gaussjor(Mgauss.gauss(Mgauss));
+                                Mgauss.tulisSolveGaussJ(Mgauss);
+                            }
                             break;
                         case 3:     //metode invers
                             main.isbacafile();
@@ -236,9 +190,9 @@ public class Main {
                             }
                             userinput.close();
                             break;
-                    
-                    }
                     break;
+                }
+                
                 case 2: //determinan
                     int submenu1;
                     Scanner sub1 = new Scanner(System.in);
