@@ -2,11 +2,7 @@ Tugas Besar 1 IF2123 Aljabar linier dan Geometri
 
 Nama Project : tubes-algeo 1
 
-Nama file :
-
-Main.java
-
-Matriks.java
+Nama file : Main.java, Matriks.java
 
 Bahasa Program : Java
 
