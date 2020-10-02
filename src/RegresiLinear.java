@@ -56,7 +56,6 @@ public class RegresiLinear {
             }
             Spl.setIsi(i, n+1, sum);
         }
-        Spl.tulisMatriks();
         Gauss g= new Gauss();
         GaussJordan gj=new GaussJordan();
         Matriks spl;
