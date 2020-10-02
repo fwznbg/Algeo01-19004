@@ -402,7 +402,7 @@ public class Matriks {
             }
             n+=1;
         }*/
-        System.out.println("");
+        System.out.println("Hasil Elminasi Gauss-Jordan");
         M.tulisMatriks();
         System.out.println("");
     }
@@ -444,7 +444,7 @@ public class Matriks {
                 M.setIsi(i, j, M.getIsi(i, j)+0.0);
             }
         }
-        System.out.println("");
+        System.out.println("Hasil Eliminasi Gauss");
         M.tulisMatriks();
         System.out.println("");
         return M;   
