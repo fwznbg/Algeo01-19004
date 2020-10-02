@@ -11,7 +11,7 @@ Motivasi : menyelesaikan tugas besar 1 aljabar linier dan geometri
 How to use :
 
 1. Jalankan program Main.java
-(buka cmd -> cd directory -> java -cp bin src/Main.java)
+(buka cmd -> cd directory -> java -cp bin Main)
 2. akan muncul 6 opsi (Sistem persamaan linier, determinan, matriks balikan, interpolasi polinom, regresi linier berganda, keluar)
 3. pilih opsi yang ada
 4. jika memilih opsi sistem persamaan linier, akan muncul opsi (Metode eliminasi Gauss, Metode eliminasi Gauss-Jordan, Metode matriks balikan, Kaidah Cramer)
