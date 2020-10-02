@@ -1,0 +1,3 @@
+[-Infinity, NaN, Infinity]
+[NaN, NaN, NaN]
+[Infinity, NaN, -Infinity]
