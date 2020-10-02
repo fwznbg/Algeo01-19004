@@ -4,7 +4,7 @@ public class Main {
     boolean bacafile = false;
     boolean savefile = false;
     void isbacafile(){
-        System.out.println("1. Keyboard\n2. File");
+        System.out.println("\n1. Keyboard\n2. File");
         System.out.print("Pilih cara input: ");
         Scanner baca = new Scanner(System.in);
         int file = baca.nextInt();
@@ -190,7 +190,6 @@ public class Main {
                             }
                             userinput.close();
                             break;
-                    break;
                 }
                 
                 case 2: //determinan
@@ -345,23 +344,18 @@ public class Main {
                         Mint.bacaMatriksFile();
                     }
                     else{
+                        System.out.println("Masukkan titik: ");
                         Mint.bacaMatriks();
                     }
                     Mint = Mint.interpolasi(Mint);
                     System.out.print("Masukkan nilai yang akan ditaksir: ");
                     x = intp.nextDouble();
                     main.issavefile();
-                    boolean solv = Mint.solveGauss(Mint);
                     if(main.savefile){
-                        try
+                        Mint.tulisintplFile(Mint, x);
                     }
                     else{
-                        if(solv){
-                            
-                        }
-                        else{
-                            System.out.println("An error occured");
-                        }
+                        Mint.tulisintpl(Mint, x);
                     }
                     break;
 
