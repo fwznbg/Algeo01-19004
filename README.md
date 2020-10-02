@@ -11,6 +11,7 @@ Bahasa Program : Java
 Motivasi : menyelesaikan tugas besar 1 aljabar linier dan geometri
 
 How to use :
+
 1. Jalankan program Main.java
 (buka cmd -> cd directory -> javac Main.java -> java Main)
 2. akan muncul 6 opsi (Sistem persamaan linier, determinan, matriks balikan, interpolasi polinom, regresi linier berganda, keluar)
@@ -26,6 +27,7 @@ How to use :
 12. jika memilih opsi regresi linier berganda, akan muncul opsi (
 
 dibuat oleh :
+
 13519004 Muhammad Bintang Pananjung
 
 13519201 Muhammad Rayhan Ravianda
