@@ -83,26 +83,26 @@ public class Main {
                             break;
                         case 2:     //gauss-jordan
                             main.isbacafile();
-                            Scanner gauss = new Scanner(System.in);
+                            Scanner gaussj = new Scanner(System.in);
                             System.out.print("Masukkan jumlah baris: ");
-                            baris = gauss.nextInt();
+                            baris = gaussj.nextInt();
                             System.out.print("Masukkan jumlah kolom: ");
-                            kolom = gauss.nextInt();
-                            Matriks Mgauss = new Matriks(baris, kolom);
+                            kolom = gaussj.nextInt();
+                            Matriks Mgaussj = new Matriks(baris, kolom);
                             if(main.bacafile){
-                                Mgauss.bacaMatriksFile();
+                                Mgaussj.bacaMatriksFile();
                             }
                             else{
-                                Mgauss.bacaMatriks();
+                                Mgaussj.bacaMatriks();
                             }
                             main.issavefile();
                             if(main.savefile){
-                                Mgauss.gaussjor(Mgauss.gauss(Mgauss));
-                                Mgauss.tulisSolveGaussJFile(Mgauss);
+                                Mgaussj.gaussjor(Mgaussj.gauss(Mgaussj));
+                                Mgaussj.tulisSolveGaussJFile(Mgaussj);
                                 }
                             else{
-                                Mgauss.gaussjor(Mgauss.gauss(Mgauss));
-                                Mgauss.tulisSolveGaussJ(Mgauss);
+                                Mgaussj.gaussjor(Mgaussj.gauss(Mgaussj));
+                                Mgaussj.tulisSolveGaussJ(Mgaussj);
                             }
                             break;
                         case 3:     //metode invers
@@ -302,7 +302,7 @@ public class Main {
                             }
                             xyz.close();
                             break;
-                        case 2:
+                        case 2: //inv kofaktor
                             main.isbacafile();
                             Scanner qqq = new Scanner(System.in);
                             System.out.print("Masukkan jumlah baris: ");
@@ -335,6 +335,34 @@ public class Main {
 
                 
                 case 4: //interpolasi
+                    main.isbacafile();
+                    double x;
+                    Scanner intp = new Scanner(System.in);
+                    System.out.print("Masukkan banyak titik: ");
+                    baris = intp.nextInt();
+                    Matriks Mint = new Matriks(baris, 2);
+                    if(main.bacafile){
+                        Mint.bacaMatriksFile();
+                    }
+                    else{
+                        Mint.bacaMatriks();
+                    }
+                    Mint = Mint.interpolasi(Mint);
+                    System.out.print("Masukkan nilai yang akan ditaksir: ");
+                    x = intp.nextDouble();
+                    main.issavefile();
+                    boolean solv = Mint.solveGauss(Mint);
+                    if(main.savefile){
+                        try
+                    }
+                    else{
+                        if(solv){
+                            
+                        }
+                        else{
+                            System.out.println("An error occured");
+                        }
+                    }
                     break;
 
                 

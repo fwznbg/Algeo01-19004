@@ -405,72 +405,7 @@ public class Matriks {
         M.tulisMatriks();
     }
 
-    void interpolasi(){
-        int n, i, j;
-        double x, y;
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Masukkan banyak titik: ");
-        n = scanner.nextInt();
-
-        Matriks titik = new Matriks(n, 2);
-        for(i=0;i<titik.getBaris();i++){
-            System.out.print("Masukkan nilai x"+i+": ");
-            x = scanner.nextDouble();
-            titik.setIsi(i, 0, x);
-            System.out.print("Masukkan nilai y"+i+": ");
-            y = scanner.nextDouble();
-            titik.setIsi(i, 1, y);
-        }
-        scanner.close();
-        Matriks intpls = new Matriks(n, n+1);
-        for(i=0;i<intpls.getBaris();i++){
-            intpls.setIsi(i, 0, 1);
-            for(j=1;j<intpls.getKolom();j++){
-                if(j != intpls.getLastIdxKlm()){
-                    intpls.setIsi(i, j, Math.pow(titik.getIsi(i, 0), j));
-                }
-                else{
-                    intpls.setIsi(i, j, titik.getIsi(i, 1));
-                }
-            }
-        }
-        
-        intpls = intpls.gauss(intpls);
-        //nunggu solve gauss
-    }
-
-    void regresi () {
-        Scanner xinput = new Scanner(System.in);
-        int n = xinput.nextInt();
-        int k = xinput.nextInt();
-        double Elmtx;
-        Matriks M= new Matriks(k+1, k+2); //inisiasi matriks
-        M.setIsi(0, 0, 1); // inisialisasi elemen 0,0 dengan 1
-        for (int j=0; j<k+2;j++){ 
-            Elmtx= xinput.nextDouble();
-            for (int i=0;i<k+1;i++){
-                if(i==0 && j<k-1){
-                    M.setIsi(i, j+1, Elmt);
-                }
-                if (i!=0){
-                    M.setIsi(i, j, Elmt);
-                }
-            }
-        double Elmty;
-        Elmty= xinput.nextDouble();
-        for (int i=0;i<k+1;i++){
-            M.setIsi(k+1, j, x);
-        }
-        for (int i=1;i<k;i++){
-            for (int j=1; j<k;j++){
-                M.kaliSkalar(i, M.getIsi(i, 0));
-            }
-        }
-        M.tulisMatriks();  
-    }
-    }
-
-    Matriks gauss(Matriks M) {
+       Matriks gauss(Matriks M) {
         int i,j;
         i=0;
         j=0;
@@ -861,6 +796,26 @@ public class Matriks {
                 }
                 break;
         }
+    }
+    Matriks interpolasi(Matriks titik){
+        int n, i, j;
+        double x, y;
+        Matriks intpls = new Matriks(titik.getBaris(), titik.getBaris()+1);
+        for(i=0;i<intpls.getBaris();i++){
+            intpls.setIsi(i, 0, 1);
+            for(j=1;j<intpls.getKolom();j++){
+                if(j != intpls.getLastIdxKlm()){
+                    intpls.setIsi(i, j, Math.pow(titik.getIsi(i, 0), j));
+                }
+                else{
+                    intpls.setIsi(i, j, titik.getIsi(i, 1));
+                }
+            }
+        }
+        
+        intpls = intpls.gauss(intpls); 
+        intpls.gaussjor(intpls);
+        return intpls;
     }
     // public static void main(String[] args){
     //     Matriks matriks1 = new Matriks(3, 4);
