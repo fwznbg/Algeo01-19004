@@ -63,23 +63,16 @@ public class Main {
                                 Mgauss.bacaMatriks();
                             }
                                 main.issavefile();
-                                boolean solveable = Mgauss.solveGauss(Mgauss.gauss(Mgauss));
                                 if(main.savefile){
-                                    if(solveable){
-                                        Mgauss.tulisSolveGaussFile(Mgauss.gauss(Mgauss));
-                                    }
-                                    else{
-                                        System.out.println("An error occured");
-                                    }
+                                    Mgauss.gauss(Mgauss);
+                                    Mgauss.tulisSolveGaussJFile(Mgauss.gaussjor(Mgauss));
                                 }
                                 else{
-                                    if(solveable){
-                                        Mgauss.tulisSolveGauss(Mgauss.gauss(Mgauss));
-                                    }
-                                    else{
-                                        System.out.println("An error occured");
-                                    }
+                                    Mgauss.gauss(Mgauss);
+                                    Mgauss.tulisMatriks();
+                                    Mgauss.tulisSolveGaussJ(Mgauss.gaussjor(Mgauss));                                    
                                 }
+                                    
                             break;
                         case 2:     //gauss-jordan
                             main.isbacafile();
@@ -102,6 +95,7 @@ public class Main {
                                 }
                             else{
                                 Mgaussj.gaussjor(Mgaussj.gauss(Mgaussj));
+                                Mgaussj.tulisMatriks();
                                 Mgaussj.tulisSolveGaussJ(Mgaussj);
                             }
                             break;
@@ -191,6 +185,7 @@ public class Main {
                             userinput.close();
                             break;
                 }
+                    break;
                 
                 case 2: //determinan
                     int submenu1;

@@ -379,7 +379,7 @@ public class Matriks {
         return inv;
     }
 
-    void gaussjor(Matriks M) {
+    Matriks gaussjor(Matriks M) {
         double x;
         int j=M.idxKlmOne(1);
         int i=1;
@@ -390,21 +390,9 @@ public class Matriks {
             }
             i++;
         }
-        /*while (n<M.getLastIdxKlm()-1){
-            i=1;
-            a=M.idxKlmOne(i);
-            while (i<=M.getLastIdxBrs() && (a+n)<=M.getLastIdxKlm()){
-                a=M.idxKlmOne(i);
-                x=M.getIsi(a-1, a+n);
-                M.kurangBaris(a-1, a+n, x);
-                i++;
-                System.out.println(a+n);
-            }
-            n+=1;
-        }*/
-        System.out.println("Hasil Elminasi Gauss-Jordan");
-        M.tulisMatriks();
-        System.out.println("");
+
+        System.out.println();
+        return M;
     }
 
        Matriks gauss(Matriks M) {
@@ -444,8 +432,6 @@ public class Matriks {
                 M.setIsi(i, j, M.getIsi(i, j)+0.0);
             }
         }
-        System.out.println("Hasil Eliminasi Gauss");
-        M.tulisMatriks();
         System.out.println("");
         return M;   
     }
@@ -512,15 +498,6 @@ public class Matriks {
         }
         return M;
     }
-    
-    boolean solveGauss (Matriks M) {
-        boolean error = true;
-        if (M.isDiagonalOne()){
-            error = false;
-            }
-        return error;
-        }
-
         
     double deterkofak(Matriks M){
         double det = 0;
