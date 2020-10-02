@@ -359,9 +359,31 @@ public class Main {
                     }
                     break;
 
-                
                 case 5: //regresi linier
-                    break;
+                    // main.isbacafile();
+                    // Scanner xinput = new Scanner(System.in);
+                    // System.out.println("Masukkan jumlah variabel");
+                    // int n = xinput.nextInt();
+                    // System.out.println("Masukkan jumlah data");
+                    // int data = xinput.nextInt();
+                    // while (data<n){
+                    //     System.out.println("jumlah data tidak mencukupi!");
+                    //     data = xinput.nextInt();
+                    // }
+                    // Matriks M = new Matriks(data, n+1);
+                    // if(main.bacafile){
+
+                    // }
+                    // else{
+                    //     System.out.println("Masukkan nilai x dan y");
+                    //     System.out.print("y ");
+                    //     for (int j=0;j<n;j++){
+                    //         System.out.print("x"+(j+1)+" ");
+                    //     }
+                    //     M.bacaMatriks();
+                    // }
+                    
+                    // break;
 
                 
                 case 6: //exit

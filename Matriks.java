@@ -812,8 +812,7 @@ public class Matriks {
                 }
             }
         }
-        
-        intpls = intpls.gauss(intpls); 
+        intpls = intpls.gauss(intpls);
         intpls.gaussjor(intpls);
         return intpls;
     }
@@ -825,7 +824,7 @@ public class Matriks {
         else{
             double taksiran = 0;
             Matriks beta= new Matriks(1, M.getBaris());
-            for (int i=0;i<=beta.getLastIdxBrs();i++){
+            for (int i=0;i<=beta.getLastIdxKlm();i++){
                 beta.setIsi(0, i, M.getIsi(i, M.getLastIdxKlm()));
             }
             System.out.println("Persamaan interpolasinya adalah");
@@ -834,7 +833,7 @@ public class Matriks {
             for (int j=0;j<=beta.getLastIdxKlm();j++){
                 if (j!=beta.getLastIdxKlm()){
                     System.out.print(beta.getIsi(0, j)+"(x"+(j+1)+")+");
-                    taksiran += beta.getIsi(0, j)*Math.pow(x, (j+1));
+                    taksiran += beta.getIsi(0, j)*Math.pow(x, j);
                 }
                 else{
                     System.out.print(beta.getIsi(0, j)+"(x"+(j+1)+")");
@@ -854,7 +853,7 @@ public class Matriks {
             else{
                 double taksiran = 0;
                 Matriks beta= new Matriks(1, M.getBaris());
-                for (int i=0;i<=beta.getLastIdxBrs();i++){
+                for (int i=0;i<=beta.getLastIdxKlm();i++){
                     beta.setIsi(0, i, M.getIsi(i, M.getLastIdxKlm()));
                 }
                 myWriter.write("Persamaan interpolasinya adalah\n");
@@ -863,11 +862,11 @@ public class Matriks {
                 for (int j=0;j<=beta.getLastIdxKlm();j++){
                     if (j!=beta.getLastIdxKlm()){
                         myWriter.write(beta.getIsi(0, j)+"(x"+(j+1)+")+");
-                        taksiran += beta.getIsi(0, j)*x;
+                        taksiran += beta.getIsi(0, j)*Math.pow(x, j);
                     }
                     else{
                         myWriter.write(beta.getIsi(0, j)+"(x"+(j+1)+")");
-                        taksiran += beta.getIsi(0, j)*x;
+                        taksiran += beta.getIsi(0, j)*Math.pow(x, (j+1));
                     }
                 }
                 myWriter.write("\nAproksimasinya adalah "+taksiran);
@@ -879,93 +878,75 @@ public class Matriks {
         }
     }
 
-    void regresi () {
-        Scanner xinput = new Scanner(System.in);
-        System.out.println("Masukkan jumlah variabel");
-        int n = xinput.nextInt();
-        System.out.println("Masukkan jumlah data");
-        int data = xinput.nextInt();
-        while (data<n){
-            System.out.println("jumlah data tidak mencukupi!");
-            data = xinput.nextInt();
-        }
-        double Elmt;
-        Matriks M= new Matriks(data, n+1);
-        System.out.println("Masukkan nilai x dan y");
-        System.out.print("y ");
-        for (int j=0;j<n;j++){
-            System.out.print("x"+(j+1)+" ");
-        }
-        System.out.println();
-        M.bacaMatriks();
-        Matriks Spl= new Matriks(n+1, n+2); //inisiasi matriks
-        Spl.setIsi(0, 0, data);
-        for (int i=1; i<n+1;i++){ //mengisi Matriks Spl kolom dan baris pertama matriks spl (selain 0,0) Matriks M
-            double sum=0;
-            for(int a=0;a<data;a++){
-                sum+=M.getIsi(a, i);
-            }
-            Spl.setIsi(i, 0, sum);
-            Spl.setIsi(0, i, sum);
-        }
-        for (int i=1; i<n+1;i++){ //mengisi Matriks Spl kolom (selain 1 dan n+1) dan baris (selain n)  matriks spl (selain 0,0) dari Matriks M
-            for (int j=1;j<n+1;j++){
-                double sum=0;
-                for(int a=0;a<data;a++){
-                    sum+=M.getIsi(a, i)*M.getIsi(a, j);
-                }
-                Spl.setIsi(i, j, sum);
-            }
-        }
-        for (int i=0;i<n+1;i++){ //mengisi kolom terakhir
-            double sum=0;
-            if (i==0){
-                for(int a=0;a<data;a++){
-                    sum+=M.getIsi(a, 0);
-                }
-            }
-            else{
-                for(int a=0;a<data;a++){
-                    sum+=M.getIsi(a, 0)*M.getIsi(a, i);
-                }
-            }
-            Spl.setIsi(i, n+1, sum);  
-        }
-        Matriks spl;
-        spl = Spl.gauss(Spl);
-        spl.gaussjor(spl);
-        if (spl.isBarisNol(spl.getLastIdxBrs()) || spl.isNoSolution(spl.getLastIdxBrs())){
-            System.out.println("Data tidak dapat diregresi");
-        }
-        else{
-            Matriks beta= new Matriks(1, n);
-            for (int i=0;i<=beta.getLastIdxBrs();i++){
-                beta.setIsi(0, i, spl.getIsi(i, spl.getLastIdxKlm()));
-            }
-            System.out.println("Persamaan regresinya adalah");
-            System.out.print("y = ");
-            double sum=0;
-            for (int j=0;j<=beta.getLastIdxKlm();j++){
-                if (j!=beta.getLastIdxKlm()){
-                    System.out.print(beta.getIsi(0, j)+"(x"+(j+1)+")+");
-                }
-                else{
-                    System.out.print(beta.getIsi(0, j)+"(x"+(j+1)+")");
-                }
-            }
-            System.out.println();
-            Matriks k= new Matriks(1, n);
-            System.out.println("Masukkan nilai-nilai yang ingin di taksir");
-            for (int j=0;j<n;j++){
-                System.out.print("x"+(j+1)+" ");
-            }
-            System.out.println();
-            k.bacaMatriks();
-            for (int j=0;j<=beta.getLastIdxKlm();j++){
-                sum+=beta.getIsi(0, j)*k.getIsi(0, j);
-            }
-            System.out.println("Aproksimasinya adalah "+sum);
-        }
+    // void regresi (Matriks M) {
+    //     Matriks Spl= new Matriks(n+1, n+2); //inisiasi matriks
+    //     Spl.setIsi(0, 0, data);
+    //     for (int i=1; i<n+1;i++){ //mengisi Matriks Spl kolom dan baris pertama matriks spl (selain 0,0) Matriks M
+    //         double sum=0;
+    //         for(int a=0;a<data;a++){
+    //             sum+=M.getIsi(a, i);
+    //         }
+    //         Spl.setIsi(i, 0, sum);
+    //         Spl.setIsi(0, i, sum);
+    //     }
+    //     for (int i=1; i<n+1;i++){ //mengisi Matriks Spl kolom (selain 1 dan n+1) dan baris (selain n)  matriks spl (selain 0,0) dari Matriks M
+    //         for (int j=1;j<n+1;j++){
+    //             double sum=0;
+    //             for(int a=0;a<data;a++){
+    //                 sum+=M.getIsi(a, i)*M.getIsi(a, j);
+    //             }
+    //             Spl.setIsi(i, j, sum);
+    //         }
+    //     }
+    //     for (int i=0;i<n+1;i++){ //mengisi kolom terakhir
+    //         double sum=0;
+    //         if (i==0){
+    //             for(int a=0;a<data;a++){
+    //                 sum+=M.getIsi(a, 0);
+    //             }
+    //         }
+    //         else{
+    //             for(int a=0;a<data;a++){
+    //                 sum+=M.getIsi(a, 0)*M.getIsi(a, i);
+    //             }
+    //         }
+    //         Spl.setIsi(i, n+1, sum);  
+    //     }
+    //     Matriks spl;
+    //     spl = Spl.gauss(Spl);
+    //     spl.gaussjor(spl);
+    //     if (spl.isBarisNol(spl.getLastIdxBrs()) || spl.isNoSolution(spl.getLastIdxBrs())){
+    //         System.out.println("Data tidak dapat diregresi");
+    //     }
+    //     else{
+    //         Matriks beta= new Matriks(1, n);
+    //         for (int i=0;i<=beta.getLastIdxBrs();i++){
+    //             beta.setIsi(0, i, spl.getIsi(i, spl.getLastIdxKlm()));
+    //         }
+    //         System.out.println("Persamaan regresinya adalah");
+    //         System.out.print("y = ");
+    //         double sum=0;
+    //         for (int j=0;j<=beta.getLastIdxKlm();j++){
+    //             if (j!=beta.getLastIdxKlm()){
+    //                 System.out.print(beta.getIsi(0, j)+"(x"+(j+1)+")+");
+    //             }
+    //             else{
+    //                 System.out.print(beta.getIsi(0, j)+"(x"+(j+1)+")");
+    //             }
+    //         }
+    //         System.out.println();
+    //         Matriks k= new Matriks(1, n);
+    //         System.out.println("Masukkan nilai-nilai yang ingin di taksir");
+    //         for (int j=0;j<n;j++){
+    //             System.out.print("x"+(j+1)+" ");
+    //         }
+    //         System.out.println();
+    //         k.bacaMatriks();
+    //         for (int j=0;j<=beta.getLastIdxKlm();j++){
+    //             sum+=beta.getIsi(0, j)*k.getIsi(0, j);
+    //         }
+    //         System.out.println("Aproksimasinya adalah "+sum);
+    //     }
 
-    }
+    // }
 }
